@@ -1,0 +1,43 @@
+.gold-border-frame-wrapper {
+  position: relative;
+  border: 1px solid var(--gold-border);
+  background: var(--bg-card);
+  border-radius: 8px;
+  padding: 1rem;
+  transition: all 0.3s ease;
+}
+
+.gold-border-frame-wrapper.ornate {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.gold-border-frame-wrapper.ornate::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  right: 4px;
+  bottom: 4px;
+  border: 1px dashed var(--gold-border);
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+.corner-ornament {
+  position: absolute;
+  color: var(--gold-light);
+  font-size: 0.75rem;
+  line-height: 1;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.corner-ornament.top-left { top: 6px; left: 6px; }
+.corner-ornament.top-right { top: 6px; right: 6px; }
+.corner-ornament.bottom-left { bottom: 6px; left: 6px; }
+.corner-ornament.bottom-right { bottom: 6px; right: 6px; }
+
+.gold-border-frame-content {
+  position: relative;
+  z-index: 1;
+}

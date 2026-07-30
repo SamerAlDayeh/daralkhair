@@ -1,0 +1,47 @@
+import { SpecialOffer } from '../types';
+import { BOOKS_DATA } from './books';
+
+export const SPECIAL_OFFERS: SpecialOffer[] = [
+  {
+    id: 'off-1',
+    title: 'مجموعة التراث الملكية للتفسير والحديث',
+    titleArabic: 'مجموعة التراث الملكية للتفسير والحديث',
+    subtitle: 'وفر 22% عند اقتناء ركيزتي العلوم الشرعية',
+    description: 'احصل على تفسير ابن كثير (8 مجلدات) مع صحيح البخاري (6 مجلدات) في صندوق إهداء خشب فاخر مع خصم حصري.',
+    discountBadge: 'توفير 22%',
+    code: 'HERITAGE22',
+    bundleBooks: [BOOKS_DATA[0], BOOKS_DATA[1]],
+    originalPrice: 425,
+    offerPrice: 330,
+    expiresIn: 'طبعة رمضانية محدودة',
+    image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&q=80&w=900',
+  },
+  {
+    id: 'off-2',
+    title: 'خزانة الإمام الغزالي للسلوك والتزكية',
+    titleArabic: 'خزانة الإمام الغزالي للسلوك والتزكية',
+    subtitle: 'طقم كامل 5 مجلدات (إحياء علوم الدين + بداية الهداية)',
+    description: 'ابحر في رحلة إيمانية مع أمهات كتب التزكية والتهذيب الأخلاقي لحجة الإسلام أبي حامد الغزالي.',
+    discountBadge: 'الأكثر مبيعاً',
+    code: 'GHAZALI15',
+    bundleBooks: [BOOKS_DATA[3], BOOKS_DATA[7]],
+    originalPrice: 192,
+    offerPrice: 155,
+    expiresIn: 'حتى نفاذ الكمية',
+    image: 'https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&q=80&w=900',
+  },
+  {
+    id: 'off-3',
+    title: 'موسوعة الفقه والسنة المطهرة',
+    titleArabic: 'موسوعة الفقه والسنة المطهرة',
+    subtitle: 'الموطأ + رياض الصالحين طبعة المقتنين الخاصة',
+    description: 'خزانة علمية ضرورية لكل بيت وطالب علم تتضمن عمل أهل المدينة وأحاديث الأخلاق والآداب.',
+    discountBadge: 'توفير 20%',
+    code: 'FIQH20',
+    bundleBooks: [BOOKS_DATA[2], BOOKS_DATA[10]],
+    originalPrice: 160,
+    offerPrice: 128,
+    expiresIn: 'خصم مباشر من الدار',
+    image: 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=900',
+  },
+];

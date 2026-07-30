@@ -1,0 +1,283 @@
+@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Cairo:wght@400;600;700;800;900&family=Cinzel:wght@600;700;800&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&display=swap');
+@import "tailwindcss";
+/* Custom Pure CSS Theme & Global Style System for Dar Al Khair Publishers - Natural Tones Theme */
+
+:root,
+[data-theme="dark"] {
+  --bg-primary: #1E1E1E;
+  --bg-secondary: #242424;
+  --bg-card: #1A1A1A;
+  --bg-card-hover: #262626;
+  --bg-overlay: rgba(30, 30, 30, 0.88);
+  --text-primary: #CAC9C5;
+  --text-secondary: rgba(202, 201, 197, 0.8);
+  --text-muted: #8E8B82;
+  --text-inv: #1E1E1E;
+  
+  --gold-primary: #8B653D;
+  --gold-light: #CEB081;
+  --gold-bright: #E8D3A7;
+  --gold-gradient: linear-gradient(135deg, #8B653D 0%, #CEB081 100%);
+  --gold-border: rgba(206, 176, 129, 0.35);
+  --gold-glow: rgba(206, 176, 129, 0.16);
+  
+  --wood-primary: #8B653D;
+  --wood-border: rgba(139, 101, 61, 0.4);
+  --logo-bg: #465157;
+  --slate-accent: #465157;
+  --shadow-card: 0 12px 36px rgba(0, 0, 0, 0.55);
+  --shadow-glow: 0 0 25px rgba(206, 176, 129, 0.2);
+  
+  --input-bg: #1A1A1A;
+  --input-border: rgba(139, 101, 61, 0.4);
+  --badge-bg: rgba(139, 101, 61, 0.25);
+  --badge-text: #CEB081;
+  
+  --nav-bg: rgba(36, 36, 36, 0.95);
+  --footer-bg: #1A1A1A;
+}
+
+[data-theme="light"] {
+  --bg-primary: #F5F1EA;
+  --bg-secondary: #EBE4D8;
+  --bg-card: #FAF6EF;
+  --bg-card-hover: #FFFFFF;
+  --bg-overlay: rgba(245, 241, 234, 0.92);
+  --text-primary: #231F1B;
+  --text-secondary: #544D44;
+  --text-muted: #857B6F;
+  --text-inv: #FFFFFF;
+  
+  --gold-primary: #8B653D;
+  --gold-light: #A3804C;
+  --gold-bright: #8B653D;
+  --gold-gradient: linear-gradient(135deg, #8B653D 0%, #CEB081 100%);
+  --gold-border: rgba(139, 101, 61, 0.35);
+  --gold-glow: rgba(139, 101, 61, 0.12);
+  
+  --wood-primary: #8B653D;
+  --wood-border: rgba(139, 101, 61, 0.4);
+  --logo-bg: #465157;
+  --slate-accent: #465157;
+  --shadow-card: 0 10px 30px rgba(139, 101, 61, 0.12);
+  --shadow-glow: 0 0 20px rgba(139, 101, 61, 0.18);
+  
+  --input-bg: #FFFFFF;
+  --input-border: rgba(139, 101, 61, 0.35);
+  --badge-bg: rgba(139, 101, 61, 0.15);
+  --badge-text: #8B653D;
+  
+  --nav-bg: rgba(245, 241, 234, 0.95);
+  --footer-bg: #E3D9CC;
+}
+
+/* Base Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  direction: rtl;
+  text-align: right;
+  font-family: 'Cairo', 'Amiri', system-ui, sans-serif;
+  scroll-behavior: smooth;
+  font-size: 16px;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body {
+  direction: rtl;
+  text-align: right;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+  min-height: 100vh;
+  font-family: 'Cairo', 'Amiri', system-ui, sans-serif;
+}
+
+/* Typography Defaults */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Amiri', 'Cairo', serif;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.25;
+}
+
+.font-arabic {
+  font-family: 'Amiri', serif;
+}
+
+.font-serif {
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.font-cinzel {
+  font-family: 'Cinzel', serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gold-primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-light);
+}
+
+/* Gold Gradient Text Utility */
+.gold-text {
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+/* Global Gold Button Styles */
+.btn-gold {
+  background: var(--gold-gradient);
+  color: #16181A;
+  font-weight: 600;
+  padding: 0.75rem 1.75rem;
+  border-radius: 6px;
+  border: 1px solid var(--gold-light);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(139, 101, 61, 0.25);
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow);
+  filter: brightness(1.1);
+}
+
+.btn-outline-gold {
+  background: transparent;
+  color: var(--gold-light);
+  border: 1px solid var(--gold-border);
+  padding: 0.75rem 1.75rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.btn-outline-gold:hover {
+  background: var(--gold-glow);
+  border-color: var(--gold-light);
+  color: var(--text-primary);
+  transform: translateY(-2px);
+}
+
+/* Gold Ornamental Border Frame */
+.gold-frame {
+  position: relative;
+  border: 1px solid var(--gold-border);
+  padding: 1px;
+}
+
+.gold-frame::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border: 1px solid var(--gold-border);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Islamic Geometric Divider */
+.ornament-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem 0;
+  gap: 1rem;
+}
+
+.ornament-divider::before,
+.ornament-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-border), transparent);
+}
+
+.ornament-symbol {
+  color: var(--gold-light);
+  font-size: 1.25rem;
+}
+
+/* Section Title Shared */
+.section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-subtitle {
+  color: var(--gold-light);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.section-description {
+  color: var(--text-secondary);
+  max-width: 650px;
+  margin: 0 auto;
+  font-size: 1.05rem;
+}
+
+/* Container */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}

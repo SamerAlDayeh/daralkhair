@@ -1,0 +1,6 @@
+{
+  "name": "Dar Al Khair Publishers",
+  "description": "Premium Islamic publishing house offering authentic classical and contemporary Islamic books, manuscripts, and scholarship.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
