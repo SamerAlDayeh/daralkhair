@@ -1,41 +1,39 @@
-import React, { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { BOOKS_DATA } from '../../data/books';
-import { useCart } from '../../context/CartContext';
-import { BookCard } from '../../components/BookCard/BookCard';
-import { QuickViewModal } from '../../components/QuickViewModal/QuickViewModal';
-import { GoldBorderFrame } from '../../components/GoldBorderFrame/GoldBorderFrame';
-import { Book } from '../../types';
-import {
-  ShoppingBag,
-  Star,
-  ArrowRight,
-  Bookmark
-} from 'lucide-react';
-import './BookDetails.css';
+import React, { useState } from "react";
+import { useParams, Link } from "react-router-dom";
+import { BOOKS_DATA } from "../../data/books";
+import { useCart } from "../../context/CartContext";
+import { BookCard } from "../../components/BookCard/BookCard";
+import { QuickViewModal } from "../../components/QuickViewModal/QuickViewModal";
+import { GoldBorderFrame } from "../../components/GoldBorderFrame/GoldBorderFrame";
+import { ShoppingBag, Star, ArrowRight, Bookmark } from "lucide-react";
+import "./BookDetails.css";
 
-export const BookDetails: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+export const BookDetails = () => {
+  const { id } = useParams();
   const { addToCart } = useCart();
 
-  const book = BOOKS_DATA.find(b => b.id === id);
+  const book = BOOKS_DATA.find((b) => b.id === id);
 
   const [quantity, setQuantity] = useState(1);
-  const [activeImage, setActiveImage] = useState<string>('');
-  const [quickViewBook, setQuickViewBook] = useState<Book | null>(null);
+  const [activeImage, setActiveImage] = useState("");
+  const [quickViewBook, setQuickViewBook] = useState(null);
 
   if (!book) {
     return (
       <div className="container py-5 text-center font-arabic">
         <h2>الكتاب غير موجود</h2>
         <p>لم نتمكن من العثور على المطبوعة المطلوبة في الفهرس.</p>
-        <Link to="/books" className="btn-gold mt-3 font-arabic">العودة إلى فهرس الكتب</Link>
+        <Link to="/books" className="btn-gold mt-3 font-arabic">
+          العودة إلى فهرس الكتب
+        </Link>
       </div>
     );
   }
 
   const currentCover = activeImage || book.coverImage;
-  const relatedBooks = BOOKS_DATA.filter(b => b.category === book.category && b.id !== book.id).slice(0, 3);
+  const relatedBooks = BOOKS_DATA.filter(
+    (b) => b.category === book.category && b.id !== book.id,
+  ).slice(0, 3);
 
   const handleAddToCart = () => {
     addToCart(book, quantity);
@@ -62,7 +60,11 @@ export const BookDetails: React.FC = () => {
           <div className="book-gallery-col">
             <GoldBorderFrame variant="ornate" className="main-cover-frame">
               <div className="main-cover-box">
-                <img src={currentCover} alt={book.title} className="main-cover-img" />
+                <img
+                  src={currentCover}
+                  alt={book.title}
+                  className="main-cover-img"
+                />
               </div>
             </GoldBorderFrame>
 
@@ -72,7 +74,7 @@ export const BookDetails: React.FC = () => {
                 <img
                   src={book.coverImage}
                   alt="غلاف الكتاب"
-                  className={`inside-thumb ${currentCover === book.coverImage ? 'active' : ''}`}
+                  className={`inside-thumb ${currentCover === book.coverImage ? "active" : ""}`}
                   onClick={() => setActiveImage(book.coverImage)}
                 />
                 {book.insideImages.map((img, index) => (
@@ -80,7 +82,7 @@ export const BookDetails: React.FC = () => {
                     key={index}
                     src={img}
                     alt={`معاينة صفحة ${index + 1}`}
-                    className={`inside-thumb ${currentCover === img ? 'active' : ''}`}
+                    className={`inside-thumb ${currentCover === img ? "active" : ""}`}
                     onClick={() => setActiveImage(img)}
                   />
                 ))}
@@ -95,7 +97,9 @@ export const BookDetails: React.FC = () => {
             <div className="arabic-title font-arabic">{book.titleArabic}</div>
 
             <div className="author-row">
-              <span>المؤلف: <strong>{book.authorArabic || book.author}</strong></span>
+              <span>
+                المؤلف: <strong>{book.authorArabic || book.author}</strong>
+              </span>
             </div>
 
             {/* Rating */}
@@ -106,7 +110,9 @@ export const BookDetails: React.FC = () => {
                 ))}
               </div>
               <span className="rating-score">{book.rating.toFixed(2)}</span>
-              <span className="reviews-num">({book.reviewsCount} تقييم علمي موثق)</span>
+              <span className="reviews-num">
+                ({book.reviewsCount} تقييم علمي موثق)
+              </span>
             </div>
 
             {/* Price Row */}
@@ -114,11 +120,15 @@ export const BookDetails: React.FC = () => {
               <div className="price-box">
                 <span className="price">${book.price.toFixed(2)}</span>
                 {book.originalPrice && (
-                  <span className="original">${book.originalPrice.toFixed(2)}</span>
+                  <span className="original">
+                    ${book.originalPrice.toFixed(2)}
+                  </span>
                 )}
               </div>
               {book.discountPercent && (
-                <span className="savings-badge">وفر {book.discountPercent}% مباشر</span>
+                <span className="savings-badge">
+                  وفر {book.discountPercent}% مباشر
+                </span>
               )}
             </div>
 
@@ -126,19 +136,25 @@ export const BookDetails: React.FC = () => {
             <div className="details-actions-row">
               <div className="quantity-picker">
                 <button
-                  onClick={() => setQuantity(p => Math.max(1, p - 1))}
+                  onClick={() => setQuantity((p) => Math.max(1, p - 1))}
                   className="qty-btn"
                   disabled={quantity <= 1}
                 >
                   -
                 </button>
                 <span className="qty-value">{quantity}</span>
-                <button onClick={() => setQuantity(p => p + 1)} className="qty-btn">
+                <button
+                  onClick={() => setQuantity((p) => p + 1)}
+                  className="qty-btn"
+                >
                   +
                 </button>
               </div>
 
-              <button className="btn-gold add-cart-large font-arabic" onClick={handleAddToCart}>
+              <button
+                className="btn-gold add-cart-large font-arabic"
+                onClick={handleAddToCart}
+              >
                 <ShoppingBag size={20} />
                 <span>أضف إلى سلة الشراء</span>
               </button>
@@ -176,7 +192,9 @@ export const BookDetails: React.FC = () => {
         {/* Detailed Description & Table of Contents */}
         <div className="book-description-section font-arabic">
           <div className="desc-tabs">
-            <h3 className="section-title font-arabic">نبذة عن الكتاب والقيمة العلمية</h3>
+            <h3 className="section-title font-arabic">
+              نبذة عن الكتاب والقيمة العلمية
+            </h3>
             <p className="long-description-p">{book.longDescription}</p>
 
             {book.tableOfContents && book.tableOfContents.length > 0 && (
@@ -203,14 +221,16 @@ export const BookDetails: React.FC = () => {
           <div className="related-books-section font-arabic">
             <div className="section-header">
               <span className="section-subtitle">إصدارات ذات صلة</span>
-              <h2 className="section-title">كتب ومراجع أخرى في قسم {book.category}</h2>
+              <h2 className="section-title">
+                كتب ومراجع أخرى في قسم {book.category}
+              </h2>
             </div>
             <div className="books-grid">
-              {relatedBooks.map(rel => (
+              {relatedBooks.map((rel) => (
                 <BookCard
                   key={rel.id}
                   book={rel}
-                  onQuickView={b => setQuickViewBook(b)}
+                  onQuickView={(b) => setQuickViewBook(b)}
                 />
               ))}
             </div>

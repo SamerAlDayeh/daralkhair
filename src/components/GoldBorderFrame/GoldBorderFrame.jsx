@@ -1,20 +1,14 @@
-import React from 'react';
-import './GoldBorderFrame.css';
+import React from "react";
+import "./GoldBorderFrame.css";
 
-interface GoldFrameProps {
-  children: React.ReactNode;
-  className?: string;
-  variant?: 'simple' | 'ornate';
-}
-
-export const GoldBorderFrame: React.FC<GoldFrameProps> = ({
+export const GoldBorderFrame = ({
   children,
-  className = '',
-  variant = 'ornate',
+  className = "",
+  variant = "ornate",
 }) => {
   return (
     <div className={`gold-border-frame-wrapper ${variant} ${className}`}>
-      {variant === 'ornate' && (
+      {variant === "ornate" && (
         <>
           <div className="corner-ornament top-left">✦</div>
           <div className="corner-ornament top-right">✦</div>
