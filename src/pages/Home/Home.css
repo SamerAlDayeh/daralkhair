@@ -1,4 +1,4 @@
-/* Home Page - Simplified & Elegant Classical Style System */
+/* Home Page - Classical & Luxury Dark Theme */
 
 .home-page {
   display: flex;
@@ -154,194 +154,202 @@
 }
 
 /* ==========================================================================
-   2. CATEGORIES SECTION
+   2. CONTINUOUS MARQUEE BOOKS SLIDER SECTION
    ========================================================================== */
 
-.categories-section {
-  padding: 4.5rem 0;
+.marquee-books-section {
+  padding: 4.5rem 0 3.5rem;
+  overflow: hidden;
+  position: relative;
+  background: var(--bg-primary, #080d14);
 }
 
-.categories-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+.marquee-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 2rem 0;
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+  direction: ltr;
 }
 
-.category-card {
+.marquee-track {
   display: flex;
-  align-items: center;
-  gap: 1.25rem;
-  padding: 1.25rem 1.5rem;
-  background: var(--bg-card, #121c27);
-  border: 1px solid var(--gold-border, rgba(197, 160, 89, 0.3));
-  text-decoration: none;
-  transition: all 0.3s ease;
+  gap: 2.5rem;
+  width: max-content;
+  animation: marqueeScroll 50s linear infinite;
+  will-change: transform;
 }
 
-.category-card:hover {
-  border-color: var(--gold-light, #e6ca65);
-  transform: translateY(-3px);
-  background: var(--bg-card-hover, #182535);
+.marquee-track:hover,
+.marquee-track:active,
+.marquee-track.paused {
+  animation-play-state: paused;
 }
 
-.category-icon-box {
-  width: 48px;
-  height: 48px;
-  background: rgba(206, 176, 129, 0.1);
-  border: 1px solid var(--gold-border, rgba(197, 160, 89, 0.3));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--gold-light, #e6ca65);
+.marquee-card-wrapper {
+  width: 380px;
   flex-shrink: 0;
+  direction: rtl;
 }
 
-.category-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.category-name {
-  font-size: 1.15rem;
-  font-family: "Amiri", serif;
-  font-weight: 700;
-  color: var(--text-primary, #ffffff);
-  margin-bottom: 0.2rem;
-}
-
-.category-link {
-  font-size: 0.8rem;
-  color: var(--gold-primary, #c5a059);
-  transition: color 0.2s ease;
-}
-
-.category-card:hover .category-link {
-  color: var(--gold-light, #e6ca65);
+@keyframes marqueeScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 /* ==========================================================================
-   3. BOOKS SHOWCASE SECTION
+   3. HOME OFFERS SECTION (تسميات خاصة بالصفحة الرئيسية لعدم التضارب)
    ========================================================================== */
 
-.books-showcase-section {
-  padding: 4.5rem 0;
+.home-offers-section {
+  position: relative;
+  padding: 5rem 0;
   background: var(--bg-secondary, #0c141f);
   border-top: 1px solid var(--gold-border, rgba(197, 160, 89, 0.3));
   border-bottom: 1px solid var(--gold-border, rgba(197, 160, 89, 0.3));
-}
-
-.books-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  margin-bottom: 3rem;
-}
-
-.view-more-container {
-  display: flex;
-  justify-content: center;
-}
-
-/* ==========================================================================
-   4. OFFERS BANNER SECTION
-   ========================================================================== */
-
-.offers-banner-section {
-  position: relative;
-  padding: 4.5rem 0;
-  background: var(--bg-primary, #080d14);
   overflow: hidden;
 }
 
-.offers-banner-card {
+.home-offers-grid {
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 3rem;
-  align-items: center;
-  background: var(--bg-card, #121c27);
-  border: 1px solid var(--gold-border, rgba(197, 160, 89, 0.3));
-  padding: 2.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
   position: relative;
   z-index: 2;
 }
 
-.offers-badge {
-  display: inline-block;
-  padding: 0.3rem 0.75rem;
-  background: rgba(206, 176, 129, 0.15);
-  color: var(--gold-light, #e6ca65);
+.home-offer-card {
+  background: var(--bg-card, #121c27);
   border: 1px solid var(--gold-border, rgba(197, 160, 89, 0.3));
-  font-size: 0.8rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.35s ease;
 }
 
-.offers-title {
-  font-size: 2rem;
+.home-offer-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--gold-light, #e6ca65);
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.6),
+    0 0 20px rgba(197, 160, 89, 0.15);
+}
+
+.home-offer-img-box {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+}
+
+.home-offer-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.home-offer-card:hover .home-offer-img {
+  transform: scale(1.05);
+}
+
+.home-offer-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: linear-gradient(135deg, #e6ca65, #c5a059);
+  color: #080d14;
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 2px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.home-offer-content {
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.home-offer-title {
   font-family: "Amiri", serif;
+  font-size: 1.5rem;
   font-weight: 700;
   color: var(--text-primary, #ffffff);
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
 }
 
-.offers-desc {
-  font-size: 0.95rem;
+.home-offer-desc {
+  font-size: 0.9rem;
   color: var(--text-secondary, #a0aec0);
   line-height: 1.7;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
+  flex-grow: 1;
 }
 
-.offers-price-row {
+.home-offer-price-row {
   display: flex;
-  align-items: center;
-  gap: 1.25rem;
+  align-items: baseline;
+  gap: 1rem;
   margin-bottom: 1rem;
-  flex-wrap: wrap;
 }
 
-.offer-now {
+.home-offer-price-now {
   font-size: 1.8rem;
   font-weight: 700;
   color: var(--gold-light, #e6ca65);
   font-family: "Amiri", serif;
 }
 
-.offer-was {
-  font-size: 1.1rem;
+.home-offer-price-was {
+  font-size: 1rem;
   color: var(--text-muted, #718096);
   text-decoration: line-through;
 }
 
-.offer-code {
+.home-offer-code-box {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   font-size: 0.85rem;
-  background: #181818;
+  background: rgba(8, 13, 20, 0.6);
   border: 1px dashed var(--gold-primary, #c5a059);
-  padding: 0.3rem 0.75rem;
+  padding: 0.5rem 0.85rem;
+  border-radius: 4px;
   color: var(--gold-light, #e6ca65);
-}
-
-.offers-banner-img-box {
-  width: 100%;
-  height: 280px;
-  overflow: hidden;
-  border: 1px solid var(--gold-border, rgba(197, 160, 89, 0.3));
-}
-
-.offers-banner-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  margin-bottom: 1rem;
 }
 
 /* ==========================================================================
-   5. TESTIMONIALS SECTION (قسم آراء العملاء والعلماء)
+   4. TESTIMONIALS SECTION
    ========================================================================== */
 
 .testimonials-section {
   position: relative;
   padding: 5rem 0;
-  background: var(--bg-secondary, #0c141f);
-  border-top: 1px solid var(--gold-border, rgba(197, 160, 89, 0.3));
+  background: var(--bg-primary, #080d14);
   overflow: hidden;
 }
 
@@ -467,16 +475,18 @@
   gap: 0.5rem;
 }
 
+.w-full {
+  width: 100%;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
 /* Responsive Styles */
 @media (max-width: 992px) {
-  .categories-grid,
-  .books-grid,
   .testimonials-grid {
     grid-template-columns: repeat(2, 1fr);
-  }
-
-  .offers-banner-card {
-    grid-template-columns: 1fr;
   }
 }
 
@@ -502,11 +512,17 @@
     bottom: 1rem;
     padding: 0.35rem 0.85rem;
   }
+
+  .marquee-card-wrapper {
+    width: 310px;
+  }
+
+  .marquee-track {
+    gap: 1.5rem;
+  }
 }
 
 @media (max-width: 600px) {
-  .categories-grid,
-  .books-grid,
   .testimonials-grid {
     grid-template-columns: 1fr;
   }
