@@ -5,7 +5,16 @@ import SPECIAL_OFFERS from "../../data/offers.json";
 import { BookCard } from "../../components/BookCard/BookCard";
 import { QuickViewModal } from "../../components/QuickViewModal/QuickViewModal";
 import { IslamicPattern } from "../../components/IslamicPattern/IslamicPattern";
-import { ArrowLeft, Quote, Star, Tag } from "lucide-react";
+import {
+  ArrowLeft,
+  Quote,
+  Star,
+  Globe,
+  MapPin,
+  Calendar,
+  Users,
+  BookOpen,
+} from "lucide-react";
 import "./Home.css";
 import sliderImg1 from "../../Imgs/Slider-1.jpeg";
 import sliderImg2 from "../../Imgs/Slider-2.jpeg";
@@ -35,6 +44,54 @@ const TESTIMONIALS_DATA = [
       "سرعة في التوصيل وتغليف فاخر يحافظ على الكتب من التلف. العناية بالطباعة والإخراج الفني لا يضاهيها سوى القيمة العلمية للمضمون.",
     rating: 5,
   },
+];
+
+// بيانات افتراضية للأقسام الجديدة (يمكنك تعديلها لاحقاً)
+const AGENCIES_DATA = [
+  { id: 1, name: "مكتبة الرشد", country: "المملكة العربية السعودية" },
+  { id: 2, name: "دار ابن حزم", country: "لبنان" },
+  { id: 3, name: "مكتبة الإمام المازري", country: "تونس" },
+  { id: 4, name: "مؤسسة الرسالة", country: "سوريا" },
+  { id: 5, name: "مكتبة الأنجلو", country: "مصر" },
+  { id: 6, name: "دار الفكر", country: "الأردن" },
+];
+
+const EXHIBITIONS_DATA = [
+  {
+    id: 1,
+    name: "معرض القاهرة الدولي للكتاب",
+    location: "مصر",
+    date: "يناير - فبراير",
+  },
+  {
+    id: 2,
+    name: "معرض الرياض الدولي للكتاب",
+    location: "السعودية",
+    date: "سبتمبر - أكتوبر",
+  },
+  {
+    id: 3,
+    name: "معرض الشارقة الدولي للكتاب",
+    location: "الإمارات",
+    date: "نوفمبر",
+  },
+  {
+    id: 4,
+    name: "معرض الدار البيضاء للكتاب",
+    location: "المغرب",
+    date: "مايو",
+  },
+];
+
+const AUTHORS_DATA = [
+  { id: 1, name: "د. محمد راتب النابلسي", title: "عالم وداعية إسلامي" },
+  { id: 2, name: "د. علي محمد الصلابي", title: "مؤرخ وباحث إسلامي" },
+  {
+    id: 3,
+    name: "الشيخ عبد الفتاح أبو غدة",
+    title: "من كبار المحققين والعلماء",
+  },
+  { id: 4, name: "أ.د. عبد الكريم زيدان", title: "أستاذ الشريعة الإسلامية" },
 ];
 
 export const Home = () => {
@@ -204,6 +261,97 @@ export const Home = () => {
                   <h4 className="author-name">{item.name}</h4>
                   <span className="author-role">{item.role}</span>
                 </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 5. AGENCIES SECTION (توكيلاتنا الحصرية) */}
+      <section className="agencies-section">
+        <div className="container">
+          <div className="section-header">
+            <span className="section-subtitle font-arabic">شركاء النجاح</span>
+            <h2 className="section-title font-arabic">
+              توكيلاتنا الحصرية حول العالم
+            </h2>
+            <div className="ornament-divider">
+              <span className="ornament-symbol">✦ ۞ ✦</span>
+            </div>
+          </div>
+
+          <div className="agencies-grid">
+            {AGENCIES_DATA.map((agency) => (
+              <div key={agency.id} className="agency-card">
+                <div className="agency-icon-wrapper">
+                  <Globe size={32} />
+                </div>
+                <h4 className="agency-name">{agency.name}</h4>
+                <div className="agency-country">
+                  <MapPin size={14} />
+                  <span>{agency.country}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 6. EXHIBITIONS SECTION (المعارض الدولية) */}
+      <section className="exhibitions-section">
+        <IslamicPattern opacity={0.03} />
+        <div className="container">
+          <div className="section-header">
+            <span className="section-subtitle font-arabic">حضور عالمي</span>
+            <h2 className="section-title font-arabic">
+              المعارض الدولية التي نشارك بها
+            </h2>
+            <div className="ornament-divider">
+              <span className="ornament-symbol">✦ ۞ ✦</span>
+            </div>
+          </div>
+
+          <div className="exhibitions-grid">
+            {EXHIBITIONS_DATA.map((exhibition) => (
+              <div key={exhibition.id} className="exhibition-card">
+                <h3 className="exhibition-title">{exhibition.name}</h3>
+                <div className="exhibition-details">
+                  <div className="detail-item">
+                    <MapPin size={16} />
+                    <span>{exhibition.location}</span>
+                  </div>
+                  <div className="detail-item">
+                    <Calendar size={16} />
+                    <span>{exhibition.date}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 7. AUTHORS & SCHOLARS SECTION (نخبة المؤلفين والشيوخ) */}
+      <section className="authors-section">
+        <div className="container">
+          <div className="section-header">
+            <span className="section-subtitle font-arabic">قامات علمية</span>
+            <h2 className="section-title font-arabic">
+              شيوخ ومؤلفون نتعامل معهم
+            </h2>
+            <div className="ornament-divider">
+              <span className="ornament-symbol">✦ ۞ ✦</span>
+            </div>
+          </div>
+
+          <div className="authors-grid">
+            {AUTHORS_DATA.map((author) => (
+              <div key={author.id} className="author-card">
+                <div className="author-avatar">
+                  <BookOpen size={40} className="author-icon" />
+                </div>
+                <h4 className="author-name">{author.name}</h4>
+                <span className="author-title">{author.title}</span>
               </div>
             ))}
           </div>
