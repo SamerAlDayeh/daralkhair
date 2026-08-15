@@ -1,7 +1,14 @@
 /* Cart Page Specific Styles */
 
+.cart-page *,
+.cart-page *::before,
+.cart-page *::after {
+  box-sizing: border-box; /* منع العناصر من تجاوز الحواف بسبب الـ padding */
+}
+
 .cart-page {
   padding: 3rem 0 5rem;
+  overflow-x: hidden; /* منع التمرير الأفقي العرضي للشاشة بأكملها */
 }
 
 .empty-cart-card {
@@ -31,12 +38,6 @@
   align-items: start;
 }
 
-@media (max-width: 900px) {
-  .cart-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
 .cart-header-row {
   display: flex;
   align-items: center;
@@ -64,7 +65,7 @@
 }
 
 .clear-cart-btn:hover {
-  color: #FF4D4F;
+  color: #ff4d4f;
 }
 
 .cart-items-list {
@@ -82,12 +83,7 @@
   display: flex;
   align-items: center;
   gap: 1.25rem;
-}
-
-@media (max-width: 576px) {
-  .cart-item-card {
-    flex-wrap: wrap;
-  }
+  flex-wrap: wrap; /* السماح للعناصر بالنزول لسطر جديد عند ضيق الشاشة */
 }
 
 .cart-item-cover {
@@ -96,12 +92,14 @@
   object-fit: cover;
   border-radius: 4px;
   border: 1px solid var(--gold-border);
+  flex-shrink: 0; /* منع الصورة من الانكماش */
 }
 
 .cart-item-info {
   flex: 1;
   display: flex;
   flex-direction: column;
+  min-width: 0; /* منع العنصر من الانكماش وتكدس النص داخله */
 }
 
 .cart-item-cat {
@@ -118,8 +116,9 @@
 .cart-item-title {
   font-size: 1.05rem;
   color: var(--text-primary);
-  line-height: 1.3;
-
+  line-height: 1.4;
+  width: 100%; /* ضمان تمدد الاسم بالكامل */
+  display: block;
 }
 
 .cart-item-arabic {
@@ -171,9 +170,9 @@
   font-size: 1.15rem;
   font-weight: 800;
   color: var(--gold-light);
-  font-family: 'Cinzel', serif;
+  font-family: "Cinzel", serif;
   min-width: 80px;
-  text-align: right;
+  text-align: left;
 }
 
 .delete-item-btn {
@@ -186,7 +185,7 @@
 }
 
 .delete-item-btn:hover {
-  color: #FF4D4F;
+  color: #ff4d4f;
 }
 
 .cart-trust-note {
@@ -199,6 +198,7 @@
   border-radius: 8px;
   font-size: 0.88rem;
   color: var(--text-secondary);
+  line-height: 1.5;
 }
 
 /* Customer Checkout Form */
@@ -225,6 +225,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
+  width: 100%;
 }
 
 .form-group label {
@@ -235,6 +236,7 @@
 }
 
 .form-input {
+  width: 100%;
   background: var(--input-bg);
   border: 1px solid var(--input-border);
   padding: 0.65rem 0.85rem;
@@ -252,6 +254,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
+  width: 100%;
 }
 
 .checkout-price-breakdown {
@@ -283,17 +286,23 @@
 
 .total-val {
   color: var(--gold-light);
-  font-family: 'Cinzel', serif;
+  font-family: "Cinzel", serif;
 }
 
 .whatsapp-submit-btn {
   width: 100%;
   padding: 0.85rem;
   font-size: 1rem;
-  background: #25D366;
-  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
-  color: #FFFFFF;
+  background: #25d366;
+  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+  color: #ffffff;
   border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
 .whatsapp-submit-btn:hover {
@@ -306,4 +315,70 @@
   color: var(--text-muted);
   text-align: center;
   line-height: 1.4;
+}
+
+/* =========================================
+   تعديلات التجاوب (Media Queries) للهواتف
+   ========================================= */
+
+@media (max-width: 900px) {
+  .cart-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .cart-page {
+    padding: 1.5rem 0 3rem;
+  }
+
+  .empty-cart-card {
+    padding: 3rem 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .cart-item-card {
+    padding: 1rem;
+    gap: 0.85rem;
+    align-items: flex-start;
+  }
+
+  .cart-item-cover {
+    width: 70px;
+    flex-shrink: 0;
+  }
+
+  .cart-item-info {
+    width: calc(100% - 85px);
+    min-width: unset;
+    flex: none; /* إجبار الحاوية لتأخذ المساحة المتبقية بجانب الصورة وتتمدد */
+  }
+
+  /* توجيه أزرار الكمية إلى الزاوية اليمنى السفلية في الكرت */
+  .cart-item-qty-box {
+    margin-top: 0.5rem;
+    margin-inline-start: auto;
+  }
+
+  .cart-item-subtotal {
+    margin-top: 0.5rem;
+    margin-right: 0;
+    align-self: center;
+    font-size: 1.1rem;
+  }
+
+  .delete-item-btn {
+    margin-top: 0.5rem;
+    align-self: center;
+  }
+
+  .whatsapp-submit-btn {
+    font-size: 0.9rem;
+  }
 }

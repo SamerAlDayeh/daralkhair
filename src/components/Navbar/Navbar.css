@@ -4,17 +4,18 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  background: var(--nav-bg);
+  background: var(--nav-bg, #0b131d); /* إضافة لون بديل */
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--gold-border);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--gold-border, rgba(197, 160, 89, 0.3));
   transition: all 0.3s ease;
   padding: 0.85rem 0;
 }
 
 .navbar-header.scrolled {
   padding: 0.6rem 0;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
-  border-bottom-color: var(--gold-light);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  border-bottom-color: var(--gold-light, #e6ca65);
 }
 
 .navbar-container {
@@ -39,7 +40,7 @@
   width: 38px;
   height: 38px;
   background-color: #465157;
-  border: 1px solid var(--gold-light);
+  border: 1px solid var(--gold-light, #e6ca65);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -48,12 +49,13 @@
   transition: transform 0.3s ease;
 }
 
-.brand-brand-wrapper:hover .brand-icon-box {
+/* تم تصحيح اسم الكلاس هنا لتعمل الحركة عند التحويم */
+.navbar-brand:hover .brand-icon-box {
   transform: rotate(225deg);
 }
 
 .brand-arabic-symbol {
-  color: var(--gold-light);
+  color: var(--gold-light, #e6ca65);
   font-size: 0.85rem;
   font-weight: 800;
   letter-spacing: 0.5px;
@@ -70,14 +72,14 @@
   font-size: 1.15rem;
   font-weight: 800;
   letter-spacing: 0.18em;
-  color: var(--gold-light);
+  color: var(--gold-light, #e6ca65);
   line-height: 1.1;
   text-transform: uppercase;
 }
 
 .brand-subtext {
   font-size: 0.65rem;
-  color: var(--text-muted);
+  color: var(--text-muted, #9ca3af);
   letter-spacing: 0.22em;
   text-transform: uppercase;
   margin-top: 3px;
@@ -98,7 +100,7 @@
 }
 
 .nav-link {
-  color: var(--text-primary);
+  color: var(--text-primary, #ffffff);
   font-weight: 600;
   font-size: 0.78rem;
   text-transform: uppercase;
@@ -109,19 +111,19 @@
 }
 
 .nav-link::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 0;
   width: 0%;
   height: 1px;
-  background: var(--gold-light);
+  background: var(--gold-light, #e6ca65);
   transition: width 0.3s ease;
 }
 
 .nav-link:hover,
 .nav-link.active {
-  color: var(--gold-light);
+  color: var(--gold-light, #e6ca65);
 }
 
 .nav-link:hover::after,
@@ -138,32 +140,32 @@
 
 .cart-icon-btn {
   position: relative;
-  background: var(--bg-card);
-  border: 1px solid var(--gold-border);
+  background: var(--bg-card, #121c27);
+  border: 1px solid var(--gold-border, #c5a059);
   width: 44px;
   height: 44px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-primary);
+  color: var(--text-primary, #ffffff);
   transition: all 0.25s ease;
   text-decoration: none;
 }
 
 .cart-icon-btn:hover {
-  border-color: var(--gold-light);
-  color: var(--gold-light);
+  border-color: var(--gold-light, #e6ca65);
+  color: var(--gold-light, #e6ca65);
   transform: scale(1.05);
-  box-shadow: var(--shadow-glow);
+  box-shadow: 0 0 10px rgba(197, 160, 89, 0.3);
 }
 
 .cart-badge {
   position: absolute;
   top: -4px;
   right: -4px;
-  background: var(--gold-gradient);
-  color: #16181A;
+  background: linear-gradient(135deg, #e6ca65, #c5a059);
+  color: #16181a;
   font-size: 0.72rem;
   font-weight: 800;
   width: 20px;
@@ -177,9 +179,9 @@
 
 .mobile-hamburger {
   display: none;
-  background: var(--bg-card);
-  border: 1px solid var(--gold-border);
-  color: var(--text-primary);
+  background: var(--bg-card, #121c27);
+  border: 1px solid var(--gold-border, #c5a059);
+  color: var(--text-primary, #ffffff);
   width: 44px;
   height: 44px;
   border-radius: 8px;
@@ -196,38 +198,46 @@
 }
 
 .mobile-hamburger:hover {
-  border-color: var(--gold-light);
-  color: var(--gold-light);
+  border-color: var(--gold-light, #e6ca65);
+  color: var(--gold-light, #e6ca65);
 }
 
-/* Mobile Drawer Overlay */
+/* Mobile Drawer Overlay - Fixed Transparency Issues */
 .mobile-drawer-backdrop {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(0, 0, 0, 0.85); /* لون داكن معتم أكثر */
   backdrop-filter: blur(5px);
-  z-index: 2000;
+  -webkit-backdrop-filter: blur(5px);
+  z-index: 9999; /* ضمان ظهورها فوق كل شيء */
   display: flex;
-  justify-content: flex-end;
+  direction: rtl; /* لضمان توجيه القائمة من اليمين لليسار */
+  justify-content: flex-start; /* محاذاة القائمة لليمين */
 }
 
 .mobile-drawer {
-  background: var(--bg-card);
+  background: var(--bg-card, #121c27); /* لون بديل صلب يمنع الشفافية */
   width: 300px;
+  max-width: 85vw; /* لضمان عدم خروجها عن الشاشة في الهواتف الصغيرة */
   height: 100%;
-  border-left: 1px solid var(--gold-border);
+  border-left: 1px solid var(--gold-border, #c5a059); /* الحد من اليسار لأن القائمة على اليمين */
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
   animation: slideInDrawer 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
 }
 
 @keyframes slideInDrawer {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
+  from {
+    transform: translateX(100%);
+  } /* الدخول من اليمين */
+  to {
+    transform: translateX(0);
+  }
 }
 
 .mobile-drawer-header {
@@ -235,14 +245,14 @@
   align-items: center;
   justify-content: space-between;
   padding-bottom: 1rem;
-  border-bottom: 1px solid var(--gold-border);
+  border-bottom: 1px solid var(--gold-border, #c5a059);
   margin-bottom: 1.5rem;
 }
 
 .mobile-drawer-close {
-  background: var(--bg-secondary);
-  border: 1px solid var(--gold-border);
-  color: var(--text-primary);
+  background: var(--bg-secondary, #1a2430);
+  border: 1px solid var(--gold-border, #c5a059);
+  color: var(--text-primary, #ffffff);
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -264,7 +274,7 @@
   gap: 1rem;
   padding: 0.85rem 1rem;
   border-radius: 6px;
-  color: var(--text-primary);
+  color: var(--text-primary, #ffffff);
   font-weight: 500;
   text-decoration: none;
   transition: all 0.2s ease;
@@ -273,20 +283,24 @@
 
 .mobile-nav-link:hover,
 .mobile-nav-link.active {
-  background: var(--gold-glow);
-  border-color: var(--gold-border);
-  color: var(--gold-light);
+  background: rgba(197, 160, 89, 0.1);
+  border-color: var(--gold-border, #c5a059);
+  color: var(--gold-light, #e6ca65);
 }
 
 .mobile-drawer-footer {
   margin-top: auto;
   padding-top: 1.5rem;
-  border-top: 1px solid var(--gold-border);
+  border-top: 1px solid var(--gold-border, #c5a059);
   text-align: center;
 }
 
 .mobile-footer-tag {
   font-size: 0.8rem;
-  color: var(--text-muted);
+  color: var(--text-muted, #9ca3af);
   margin-top: 0.4rem;
+}
+
+.gold-text {
+  color: var(--gold-light, #e6ca65);
 }

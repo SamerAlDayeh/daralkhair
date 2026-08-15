@@ -36,78 +36,94 @@ export const Navbar = () => {
   };
 
   return (
-    <header className={`navbar-header ${isScrolled ? "scrolled" : ""}`}>
-      <div className="container navbar-container">
-        {/* Brand Logo */}
-        <Link to="/" className="navbar-brand" onClick={closeMobileMenu}>
-          <div className="brand-icon-wrapper">
-            <div className="brand-icon-box rotate-45">
-              <span className="-rotate-45 brand-arabic-symbol font-bold text-[#CEB081]">
-                DK
+    <>
+      <header className={`navbar-header ${isScrolled ? "scrolled" : ""}`}>
+        <div className="container navbar-container">
+          {/* Brand Logo */}
+          <Link to="/" className="navbar-brand" onClick={closeMobileMenu}>
+            <div className="brand-icon-wrapper">
+              <div className="brand-icon-box rotate-45">
+                <span className="-rotate-45 brand-arabic-symbol font-bold text-[#CEB081]">
+                  DK
+                </span>
+              </div>
+            </div>
+            <div className="brand-text-box">
+              <span className="brand-name font-arabic font-bold text-lg">
+                دار الخير
+              </span>
+              <span className="brand-subtext font-arabic">
+                للنشر والتوزيع — تأسست 1978
               </span>
             </div>
-          </div>
-          <div className="brand-text-box">
-            <span className="brand-name font-arabic font-bold text-lg">
-              دار الخير
-            </span>
-            <span className="brand-subtext font-arabic">
-              للنشر والتوزيع — تأسست 1978
-            </span>
-          </div>
-        </Link>
-
-        {/* Desktop Nav Links */}
-        <nav className="desktop-nav">
-          <NavLink
-            to="/"
-            className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
-          >
-            الرئيسية
-          </NavLink>
-          <NavLink
-            to="/books"
-            className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
-          >
-            المكتبة والكتب
-          </NavLink>
-          <NavLink
-            to="/offers"
-            className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
-          >
-            العروض الخاصة
-          </NavLink>
-          <NavLink
-            to="/about"
-            className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
-          >
-            عن الدار
-          </NavLink>
-        </nav>
-
-        {/* Action Controls */}
-        <div className="navbar-actions">
-          {/* Theme Switcher */}
-          <ThemeToggle />
-
-          {/* Cart Icon Link */}
-          <Link to="/cart" className="cart-icon-btn" aria-label="Shopping Cart">
-            <ShoppingBag size={22} />
-            {totalItems > 0 && <span className="cart-badge">{totalItems}</span>}
           </Link>
 
-          {/* Mobile Menu Hamburger Toggle */}
-          <button
-            className="mobile-hamburger"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle Navigation Menu"
-          >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-      </div>
+          {/* Desktop Nav Links */}
+          <nav className="desktop-nav">
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                `nav-link ${isActive ? "active" : ""}`
+              }
+            >
+              الرئيسية
+            </NavLink>
+            <NavLink
+              to="/books"
+              className={({ isActive }) =>
+                `nav-link ${isActive ? "active" : ""}`
+              }
+            >
+              المكتبة والكتب
+            </NavLink>
+            <NavLink
+              to="/offers"
+              className={({ isActive }) =>
+                `nav-link ${isActive ? "active" : ""}`
+              }
+            >
+              العروض الخاصة
+            </NavLink>
+            <NavLink
+              to="/about"
+              className={({ isActive }) =>
+                `nav-link ${isActive ? "active" : ""}`
+              }
+            >
+              عن الدار
+            </NavLink>
+          </nav>
 
-      {/* Mobile Drawer Overlay */}
+          {/* Action Controls */}
+          <div className="navbar-actions">
+            {/* Theme Switcher */}
+            <ThemeToggle />
+
+            {/* Cart Icon Link */}
+            <Link
+              to="/cart"
+              className="cart-icon-btn"
+              aria-label="Shopping Cart"
+            >
+              <ShoppingBag size={22} />
+              {totalItems > 0 && (
+                <span className="cart-badge">{totalItems}</span>
+              )}
+            </Link>
+
+            {/* Mobile Menu Hamburger Toggle */}
+            <button
+              className="mobile-hamburger"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle Navigation Menu"
+            >
+              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* تم إخراج القائمة هنا خارج الـ header لمنع مشاكل الشفافية والـ z-index */}
       {mobileMenuOpen && (
         <div className="mobile-drawer-backdrop" onClick={closeMobileMenu}>
           <div className="mobile-drawer" onClick={(e) => e.stopPropagation()}>
@@ -174,6 +190,6 @@ export const Navbar = () => {
           </div>
         </div>
       )}
-    </header>
+    </>
   );
 };
