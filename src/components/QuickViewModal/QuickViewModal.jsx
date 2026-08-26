@@ -63,33 +63,12 @@ export const QuickViewModal = ({ book, onClose }) => {
               {book.category}
             </div>
             <h2 className="quickview-title font-arabic">{book.title}</h2>
-            <div className="quickview-arabic-title font-arabic">
-              {book.titleArabic}
-            </div>
             <div className="quickview-author font-arabic">
               المؤلف: {book.authorArabic || book.author}
             </div>
 
-            <div className="quickview-rating">
-              <Star size={16} className="star-filled" />
-              <span className="rating-num">{book.rating.toFixed(1)}</span>
-              <span className="reviews-count">
-                ({book.reviewsCount} تقييم القراء)
-              </span>
-            </div>
-
             <div className="quickview-price-row">
               <span className="price">${book.price.toFixed(2)}</span>
-              {book.originalPrice && (
-                <span className="original-price">
-                  ${book.originalPrice.toFixed(2)}
-                </span>
-              )}
-              {book.discountPercent && (
-                <span className="discount-tag font-arabic">
-                  خصم {book.discountPercent}%
-                </span>
-              )}
             </div>
 
             <p className="quickview-desc font-arabic">{book.description}</p>

@@ -183,12 +183,8 @@ export const Books = () => {
                       onChange={(e) => setSortBy(e.target.value)}
                       className="sort-select font-arabic"
                     >
-                      <option value="featured">الإصدارات المختارة</option>
                       <option value="price-desc">السعر: من الأعلى للأقل</option>
                       <option value="price-asc">السعر: من الأقل للأعلى</option>
-                      <option value="rating">الأعلى تقييماً</option>
-                      <option value="newest">الأحدث طباعة</option>
-                      <option value="oldest">الأقدم إصداراً</option>
                     </select>
                   </div>
                 </div>

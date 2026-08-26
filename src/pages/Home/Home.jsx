@@ -231,42 +231,6 @@ export const Home = () => {
         </div>
       </section>
 
-      {/* 4. TESTIMONIALS SECTION */}
-      <section className="testimonials-section">
-        <IslamicPattern opacity={0.04} />
-        <div className="container">
-          <div className="section-header">
-            <span className="section-subtitle font-arabic">
-              ثقة أهل العلم والقرّاء
-            </span>
-            <h2 className="section-title font-arabic">قالوا عن دار الخير</h2>
-            <div className="ornament-divider">
-              <span className="ornament-symbol">✦ ۞ ✦</span>
-            </div>
-          </div>
-
-          <div className="testimonials-grid font-arabic">
-            {TESTIMONIALS_DATA.map((item) => (
-              <div key={item.id} className="testimonial-card">
-                <div className="testimonial-quote-icon">
-                  <Quote size={28} />
-                </div>
-                <div className="testimonial-stars">
-                  {[...Array(item.rating)].map((_, i) => (
-                    <Star key={i} size={16} className="star-filled" />
-                  ))}
-                </div>
-                <p className="testimonial-text">"{item.comment}"</p>
-                <div className="testimonial-author">
-                  <h4 className="author-name">{item.name}</h4>
-                  <span className="author-role">{item.role}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* 5. AGENCIES SECTION (توكيلاتنا الحصرية) */}
       <section className="agencies-section">
         <div className="container">

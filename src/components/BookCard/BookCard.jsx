@@ -63,23 +63,12 @@ export const BookCard = ({ book, onQuickView }) => {
           </div>
 
           {/* Rating */}
-          <div className="book-rating">
-            <div className="stars">
-              <Star size={14} className="star-filled" />
-              <span className="rating-num">{book.rating.toFixed(1)}</span>
-            </div>
-            <span className="reviews-count">({book.reviewsCount} تقييم)</span>
-          </div>
+          <div className="book-rating"></div>
 
           {/* Footer / Pricing */}
           <div className="book-card-footer">
             <div className="book-price-box">
               <span className="current-price">${book.price.toFixed(2)}</span>
-              {book.originalPrice && (
-                <span className="original-price">
-                  ${book.originalPrice.toFixed(2)}
-                </span>
-              )}
             </div>
             <Link
               to={`/books/${book.id}`}

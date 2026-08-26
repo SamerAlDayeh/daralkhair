@@ -89,7 +89,7 @@
 
 .add-cart-btn {
   background: var(--gold-gradient);
-  color: #16181A;
+  color: #16181a;
   border: none;
 }
 
@@ -118,13 +118,13 @@
 
 .discount-badge {
   background: var(--gold-gradient);
-  color: #16181A;
+  color: #16181a;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .new-badge {
   background: var(--logo-bg);
-  color: #FFFFFF;
+  color: #ffffff;
   border: 1px solid var(--gold-border);
 }
 
@@ -190,12 +190,12 @@
   display: flex;
   align-items: center;
   gap: 0.25rem;
-  color: #E8D3A7;
+  color: #e8d3a7;
 }
 
 .star-filled {
-  fill: #E8D3A7;
-  color: #E8D3A7;
+  fill: #e8d3a7;
+  color: #e8d3a7;
 }
 
 .rating-num {
@@ -227,7 +227,7 @@
   font-size: 1.25rem;
   font-weight: 700;
   color: var(--gold-light);
-  font-family: 'Cinzel', serif;
+  font-family: "Cinzel", serif;
 }
 
 .original-price {
@@ -240,7 +240,9 @@
   font-size: 0.85rem;
   color: var(--text-secondary);
   font-weight: 600;
-  transition: color 0.2s ease, transform 0.2s ease;
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .view-details-link:hover {

@@ -15,8 +15,6 @@ import {
 import "./Cart.css";
 
 const WHATSAPP_NUMBER = "966148224900";
-const FREE_SHIPPING_THRESHOLD = 200;
-const SHIPPING_FEE = 25;
 
 export const Cart = () => {
   const { cart, removeFromCart, updateQuantity, clearCart, totalPrice } =
@@ -38,13 +36,7 @@ export const Cart = () => {
     [cart],
   );
 
-  const shippingFee =
-    cart.length > 0
-      ? totalPrice > FREE_SHIPPING_THRESHOLD
-        ? 0
-        : SHIPPING_FEE
-      : 0;
-  const grandTotal = totalPrice + shippingFee;
+  const grandTotal = totalPrice;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -78,7 +70,6 @@ export const Cart = () => {
 
     text += `----------------------------------------\n`;
     text += `• المجموع الفرعي: $${totalPrice.toFixed(2)}\n`;
-    text += `• الشحن: ${shippingFee === 0 ? "مجاني" : `$${shippingFee.toFixed(2)}`}\n`;
     text += `• *الإجمالي الكلي: $${grandTotal.toFixed(2)}*\n`;
     text += `\n_تم إرسال الطلب عبر موقع دار الخير الرسمي_`;
 
@@ -228,14 +219,6 @@ export const Cart = () => {
                   </div>
                 ))}
               </div>
-
-              <div className="cart-trust-note">
-                <Truck size={20} className="gold-icon" />
-                <span>
-                  الطلبات التي تتجاوز <strong>200 دولار</strong> تتمتع بـ{" "}
-                  <strong>شحن دولي مجاني ومؤمن</strong>.
-                </span>
-              </div>
             </div>
 
             {/* Right Column: Order Form & WhatsApp Checkout */}
@@ -351,20 +334,6 @@ export const Cart = () => {
 
                     {/* Price Breakdown */}
                     <div className="checkout-price-breakdown">
-                      <div className="breakdown-row">
-                        <span>مجموع المطبوعات:</span>
-                        <span>${totalPrice.toFixed(2)}</span>
-                      </div>
-                      <div className="breakdown-row">
-                        <span>أجور الشحن الدولي:</span>
-                        <span>
-                          {shippingFee === 0 ? (
-                            <strong className="text-gold">مجاناً</strong>
-                          ) : (
-                            `$${shippingFee.toFixed(2)}`
-                          )}
-                        </span>
-                      </div>
                       <div className="breakdown-row total-row">
                         <span>المبلغ الإجمالي:</span>
                         <span className="total-val">
