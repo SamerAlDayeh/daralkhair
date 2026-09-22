@@ -1,7 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import BOOKS_DATA from "../../data/Books.json";
 import "./Footer.css";
+
+const BOOK_CATEGORIES = [
+  ...new Set(BOOKS_DATA.map((book) => book.category).filter(Boolean)),
+];
 
 export const Footer = () => {
   return (
@@ -60,27 +65,13 @@ export const Footer = () => {
           <div className="footer-col">
             <h4 className="footer-heading font-arabic">أقسام المطبوعات</h4>
             <ul className="footer-links-list font-arabic">
-              <li>
-                <Link to="/books?category=القرآن+وعلوم+التفسير">
-                  القرآن وعلوم التفسير
-                </Link>
-              </li>
-              <li>
-                <Link to="/books?category=الحديث+الشريف+والسنّة">
-                  الحديث الشريف والسنّة
-                </Link>
-              </li>
-              <li>
-                <Link to="/books?category=الفقه+وأصوله">الفقه وأصوله</Link>
-              </li>
-              <li>
-                <Link to="/books?category=الرقائق+والتزكية">
-                  الرقائق والتزكية
-                </Link>
-              </li>
-              <li>
-                <Link to="/books?category=التاريخ+والسير">التاريخ والسير</Link>
-              </li>
+              {BOOK_CATEGORIES.map((category) => (
+                <li key={category}>
+                  <Link to={`/books?category=${encodeURIComponent(category)}`}>
+                    {category}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 

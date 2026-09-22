@@ -1,12 +1,19 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { BOOKS_DATA, CATEGORIES } from "../../data/books";
+// استدعاء البيانات من ملف json الجديد
+import booksData from "../../data/Books.json";
 import { BookCard } from "../../components/BookCard/BookCard";
 import { QuickViewModal } from "../../components/QuickViewModal/QuickViewModal";
 import { IslamicPattern } from "../../components/IslamicPattern/IslamicPattern";
 import { Search, SlidersHorizontal, RefreshCw, BookOpen } from "lucide-react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion"; // تم تعديل المسار ليكون framer-motion القياسي (تأكد من الحزمة لديك)
 import "./Books.css";
+
+// استخراج التصنيفات ديناميكياً من البيانات
+const CATEGORIES = [
+  "جميع التصنيفات",
+  ...new Set(booksData.map((book) => book.category)),
+];
 
 export const Books = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -18,7 +25,7 @@ export const Books = () => {
   const [sortBy, setSortBy] = useState("featured");
   const [quickViewBook, setQuickViewBook] = useState(null);
 
-  // Sync category param if URL changes
+  // تحديث التصنيف إذا تغير الرابط
   useEffect(() => {
     const cat = searchParams.get("category");
     if (cat) {
@@ -26,39 +33,47 @@ export const Books = () => {
     }
   }, [searchParams]);
 
-  // Max price calculation
+  // حساب أعلى سعر في الكتالوج ديناميكياً
   const maxPriceInCatalog = useMemo(() => {
-    return Math.max(...BOOKS_DATA.map((b) => b.price), 300);
+    const max = Math.max(...booksData.map((b) => b.price));
+    return max < 50 ? 50 : max; // وضع حد أدنى منطقي لشريط السحب
   }, []);
 
-  // Filter & Sort Logic
+  // ضبط شريط السعر عند التحميل الأولي
+  useEffect(() => {
+    setPriceRange(maxPriceInCatalog);
+  }, [maxPriceInCatalog]);
+
+  // منطق الفلترة والترتيب بناءً على الهيكلية الجديدة
   const filteredBooks = useMemo(() => {
-    return BOOKS_DATA.filter((book) => {
-      // Search term
-      const matchesSearch =
-        book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        book.titleArabic.includes(searchQuery) ||
-        book.author.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (book.authorArabic && book.authorArabic.includes(searchQuery)) ||
-        book.category.toLowerCase().includes(searchQuery.toLowerCase());
+    return booksData
+      .filter((book) => {
+        const query = searchQuery.toLowerCase();
+        // البحث في العنوان، المؤلف، دار النشر، والرقم المعياري
+        const matchesSearch =
+          (book.title && book.title.toLowerCase().includes(query)) ||
+          (book.author && book.author.toLowerCase().includes(query)) ||
+          (book.publisher && book.publisher.toLowerCase().includes(query)) ||
+          (book.ISBN && book.ISBN.toString().toLowerCase().includes(query)) ||
+          (book.category && book.category.toLowerCase().includes(query));
 
-      // Category filter
-      const matchesCategory =
-        selectedCategory === "جميع التصنيفات" ||
-        book.category === selectedCategory;
+        // فلتر التصنيف
+        const matchesCategory =
+          selectedCategory === "جميع التصنيفات" ||
+          book.category === selectedCategory;
 
-      // Price Filter
-      const matchesPrice = book.price <= priceRange;
+        // فلتر السعر
+        const matchesPrice = book.price <= priceRange;
 
-      return matchesSearch && matchesCategory && matchesPrice;
-    }).sort((a, b) => {
-      if (sortBy === "price-desc") return b.price - a.price;
-      if (sortBy === "price-asc") return a.price - b.price;
-      if (sortBy === "newest") return b.publicationYear - a.publicationYear;
-      if (sortBy === "oldest") return a.publicationYear - b.publicationYear;
-      if (sortBy === "rating") return b.rating - a.rating;
-      return 0; // default featured
-    });
+        return matchesSearch && matchesCategory && matchesPrice;
+      })
+      .sort((a, b) => {
+        if (sortBy === "price-desc") return b.price - a.price;
+        if (sortBy === "price-asc") return a.price - b.price;
+        if (sortBy === "newest") return b.year - a.year; // بناء على حقل year
+        if (sortBy === "oldest") return a.year - b.year;
+        return 0; // الافتراضي
+      });
   }, [searchQuery, selectedCategory, priceRange, sortBy]);
 
   const resetFilters = () => {
@@ -71,7 +86,7 @@ export const Books = () => {
 
   return (
     <div className="books-page">
-      {/* Page Header Header Banner */}
+      {/* القسم العلوي (الترويسة) */}
       <section className="books-hero">
         <IslamicPattern opacity={0.07} />
         <div className="container">
@@ -91,7 +106,7 @@ export const Books = () => {
       <section className="catalog-section">
         <div className="container">
           <div className="catalog-layout">
-            {/* Sidebar Controls Filter Box */}
+            {/* شريط الفلاتر الجانبي */}
             <aside className="filters-sidebar font-arabic">
               <div className="sidebar-header">
                 <div className="sidebar-title-box">
@@ -108,7 +123,7 @@ export const Books = () => {
                 </button>
               </div>
 
-              {/* Search Bar */}
+              {/* مربع البحث */}
               <div className="filter-group">
                 <label className="filter-label">البحث عن كتاب أو مؤلف</label>
                 <div className="search-input-wrapper">
@@ -117,20 +132,22 @@ export const Books = () => {
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="اسم الكتاب، المؤلف، أو الرقم المعياري..."
+                    placeholder="اسم الكتاب، المؤلف، دار النشر"
                     className="filter-input font-arabic"
                   />
                 </div>
               </div>
 
-              {/* Category Filter */}
+              {/* فلتر الأقسام (مولد ديناميكياً) */}
               <div className="filter-group">
                 <label className="filter-label">القسم والعلوم الشرعية</label>
                 <div className="category-pills-list">
                   {CATEGORIES.map((cat, idx) => (
                     <button
                       key={idx}
-                      className={`cat-pill ${selectedCategory === cat ? "active" : ""}`}
+                      className={`cat-pill ${
+                        selectedCategory === cat ? "active" : ""
+                      }`}
                       onClick={() => {
                         setSelectedCategory(cat);
                         if (cat === "جميع التصنيفات") setSearchParams({});
@@ -143,7 +160,7 @@ export const Books = () => {
                 </div>
               </div>
 
-              {/* Price Range Slider */}
+              {/* فلتر السعر */}
               <div className="filter-group">
                 <div className="price-header">
                   <label className="filter-label">السعر الأعلى</label>
@@ -151,27 +168,27 @@ export const Books = () => {
                 </div>
                 <input
                   type="range"
-                  min="20"
+                  min="5"
                   max={maxPriceInCatalog}
-                  step="5"
+                  step="1"
                   value={priceRange}
                   onChange={(e) => setPriceRange(Number(e.target.value))}
                   className="price-slider"
                 />
                 <div className="price-limits">
-                  <span>$20</span>
+                  <span>$5</span>
                   <span>${maxPriceInCatalog}</span>
                 </div>
               </div>
             </aside>
 
-            {/* Main Content Area */}
+            {/* منطقة عرض الكتب الرئيسية */}
             <main className="catalog-main">
-              {/* Toolbar Header */}
+              {/* شريط الأدوات */}
               <div className="catalog-toolbar font-arabic">
                 <div className="results-count">
                   عرض <strong>{filteredBooks.length}</strong> من إجمالي{" "}
-                  <strong>{BOOKS_DATA.length}</strong> مطبوعة
+                  <strong>{booksData.length}</strong> مطبوعة
                 </div>
 
                 <div className="sort-box">
@@ -183,14 +200,17 @@ export const Books = () => {
                       onChange={(e) => setSortBy(e.target.value)}
                       className="sort-select font-arabic"
                     >
+                      <option value="featured">الافتراضي (المميزة)</option>
                       <option value="price-desc">السعر: من الأعلى للأقل</option>
                       <option value="price-asc">السعر: من الأقل للأعلى</option>
+                      <option value="newest">سنة النشر: الأحدث</option>
+                      <option value="oldest">سنة النشر: الأقدم</option>
                     </select>
                   </div>
                 </div>
               </div>
 
-              {/* Grid or Empty state */}
+              {/* شبكة الكتب أو رسالة عدم وجود نتائج */}
               {filteredBooks.length > 0 ? (
                 <motion.div
                   className="books-catalog-grid"
@@ -226,7 +246,7 @@ export const Books = () => {
         </div>
       </section>
 
-      {/* QUICK VIEW MODAL */}
+      {/* نافذة العرض السريع */}
       <QuickViewModal
         book={quickViewBook}
         onClose={() => setQuickViewBook(null)}
@@ -234,3 +254,45 @@ export const Books = () => {
     </div>
   );
 };
+/*
+{
+    "id": 19,
+    "title": "شرح معاني الصلاة",
+    "author": "د. ماهر ياسين الفحل",
+    "publisher": "دار الخير ناشرون ومؤسسة دار الحديث",
+    "category": "حديث",
+    "ISBN": "978-9933-902-11-7",
+    "year": 2025,
+    "price": 10
+  },
+  {
+    "id": 20,
+    "title": "رياض الصالحين من كلام سيد المرسلين",
+    "author": "د. ماهر ياسين الفحل",
+    "publisher": "دار الخير ناشرون ومؤسسة دار الحديث",
+    "category": "حديث",
+    "ISBN": "9.78626E+11",
+    "year": 2025,
+    "price": 20
+  },
+  {
+    "id": 21,
+    "title": "تيسير الجامع في العلل والفوائد",
+    "author": "د. ماهر ياسين الفحل",
+    "publisher": "دار الخير ناشرون ومؤسسة دار الحديث",
+    "category": "حديث",
+    "ISBN": "9.78986E+12",
+    "year": 2026,
+    "price": 30
+  },
+  {
+    "id": 22,
+    "title": "أسباب نزول القرآن",
+    "author": "د. ماهر ياسين الفحل",
+    "publisher": "دار الخير ناشرون ومؤسسة دار الحديث",
+    "category": "حديث",
+    "ISBN": "9.78993E+12",
+    "year": 2025,
+    "price": 30
+  }
+*/

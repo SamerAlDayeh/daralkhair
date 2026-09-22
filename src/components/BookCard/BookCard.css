@@ -13,6 +13,7 @@
   height: 100%;
   position: relative;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  direction: rtl; /* اتجاه الكتابة عربي */
 }
 
 .book-card:hover {
@@ -21,23 +22,29 @@
   box-shadow: var(--shadow-card), var(--shadow-glow);
 }
 
+/* 🟢 تعديل حاوية غلاف الكتاب لضبط نسبة 5:7 */
 .book-cover-container {
   position: relative;
   width: 100%;
-  height: 280px;
+  aspect-ratio: 5 / 7; /* إجبار الحاوية على نسبة أبعاد الغلاف 5:7 */
   background: var(--bg-secondary);
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+/* 🟢 إظهار صورة الغلاف كاملة دون اقتطاع */
 .book-cover-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain; /* يضمن إظهار الصورة بالكامل دون قص */
   transition: transform 0.5s ease;
+  padding: 0.25rem; /* حاشية خفيفة لمظهر أنيق حول الغلاف */
 }
 
 .book-card:hover .book-cover-img {
-  transform: scale(1.06);
+  transform: scale(1.04);
 }
 
 .book-overlay-actions {
@@ -56,6 +63,7 @@
   transition: opacity 0.3s ease;
   backdrop-filter: blur(3px);
   padding: 1rem;
+  z-index: 3;
 }
 
 .book-card:hover .book-overlay-actions {
@@ -97,10 +105,12 @@
   filter: brightness(1.15);
 }
 
+/* 🟢 تم تعديل موضع الشارات لليمين لتتوافق مع RTL */
 .book-badges {
   position: absolute;
   top: 0.75rem;
-  left: 0.75rem;
+  right: 0.75rem;
+  left: auto;
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
@@ -114,6 +124,7 @@
   font-weight: 700;
   letter-spacing: 0.5px;
   text-transform: uppercase;
+  text-align: center;
 }
 
 .discount-badge {
@@ -133,6 +144,7 @@
   display: flex;
   flex-direction: column;
   flex: 1;
+  text-align: right;
 }
 
 .book-category {
@@ -162,14 +174,6 @@
 
 .book-title-link:hover .book-title {
   color: var(--gold-light);
-}
-
-.book-arabic-title {
-  font-size: 0.95rem;
-  color: var(--gold-light);
-  margin-bottom: 0.4rem;
-  direction: rtl;
-  opacity: 0.85;
 }
 
 .book-author {
@@ -234,6 +238,7 @@
   font-size: 0.88rem;
   color: var(--text-muted);
   text-decoration: line-through;
+  margin-right: 0.4rem;
 }
 
 .view-details-link {
@@ -243,9 +248,11 @@
   transition:
     color 0.2s ease,
     transform 0.2s ease;
+  display: inline-block;
 }
 
+/* 🟢 تحريك زر التفاصيل باتجاه اليسار تناسباً مع اللغة العربية */
 .view-details-link:hover {
   color: var(--gold-light);
-  transform: translateX(3px);
+  transform: translateX(-4px);
 }

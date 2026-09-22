@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import SPECIAL_OFFERS from "../../data/offers.json";
-import { BOOKS_DATA } from "../../data/books";
+import BOOKS_DATA from "../../data/Books.json";
 import { BookCard } from "../../components/BookCard/BookCard";
 import { QuickViewModal } from "../../components/QuickViewModal/QuickViewModal";
 import { IslamicPattern } from "../../components/IslamicPattern/IslamicPattern";

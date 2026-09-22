@@ -1,28 +1,51 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
-import { ShoppingBag, Eye, Star } from "lucide-react";
+import { ShoppingBag, Eye } from "lucide-react";
 import "./BookCard.css";
 
 export const BookCard = ({ book, onQuickView }) => {
   const { addToCart } = useCart();
 
+  // المسارات الخاصة بصور الكتاب داخل مجلد public/BooksImgs/{id}/
+  const coverImage = `/BooksImgs/${book.id}/1.webp`;
+  const internalImage1 = `/BooksImgs/${book.id}/2.webp`;
+  const internalImage2 = `/BooksImgs/${book.id}/3.webp`;
+
+  // مصفوفة كامل الصور لاستخدامها في المعاينة السريعة والمعرض
+  const bookImages = [coverImage, internalImage1, internalImage2];
+
+  const handleQuickView = () => {
+    if (onQuickView) {
+      // إرسال كائن الكتاب مضافاً إليه مصفوفة الصور لسهولة عرضها في Modal المعاينة
+      onQuickView({
+        ...book,
+        images: bookImages,
+        coverImage: coverImage,
+      });
+    }
+  };
+
   return (
-    <div className="book-card-wrapper">
+    <div className="book-card-wrapper font-arabic">
       <div className="book-card">
         {/* Cover Container */}
         <div className="book-cover-container">
           <img
-            src={book.coverImage}
+            src={coverImage}
             alt={book.title}
             className="book-cover-img"
             loading="lazy"
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = "/BooksImgs/default-cover.webp"; // صورة افتراضية في حال عدم وجود المجلد
+            }}
           />
           <div className="book-overlay-actions">
             {onQuickView && (
               <button
-                className="action-btn quick-view-btn"
-                onClick={() => onQuickView(book)}
+                className="action-btn quick-view-btn font-arabic"
+                onClick={handleQuickView}
                 title="معاينة سريعة"
                 aria-label="معاينة الكتاب"
               >
@@ -31,8 +54,8 @@ export const BookCard = ({ book, onQuickView }) => {
               </button>
             )}
             <button
-              className="action-btn add-cart-btn"
-              onClick={() => addToCart(book, 1)}
+              className="action-btn add-cart-btn font-arabic"
+              onClick={() => addToCart({ ...book, coverImage }, 1)}
               title="أضف إلى السلة"
               aria-label="أضف الكتاب إلى سلة الشراء"
             >
@@ -42,7 +65,7 @@ export const BookCard = ({ book, onQuickView }) => {
           </div>
 
           {/* Badges */}
-          <div className="book-badges">
+          <div className="book-badges font-arabic">
             {book.isOffer && book.discountPercent && (
               <span className="badge discount-badge">
                 خصم {book.discountPercent}%
@@ -63,12 +86,24 @@ export const BookCard = ({ book, onQuickView }) => {
           </div>
 
           {/* Rating */}
-          <div className="book-rating"></div>
+          <div className="book-rating">
+            {/* مكان التقييم بالنجوم عند الحاجة */}
+          </div>
 
           {/* Footer / Pricing */}
           <div className="book-card-footer">
             <div className="book-price-box">
-              <span className="current-price">${book.price.toFixed(2)}</span>
+              <span className="current-price">
+                $
+                {typeof book.price === "number"
+                  ? book.price.toFixed(2)
+                  : book.price}
+              </span>
+              {book.originalPrice && (
+                <span className="original-price">
+                  ${book.originalPrice.toFixed(2)}
+                </span>
+              )}
             </div>
             <Link
               to={`/books/${book.id}`}
