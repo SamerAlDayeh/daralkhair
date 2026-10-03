@@ -170,6 +170,7 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  padding-bottom: 0.2rem;
 }
 
 .book-title-link:hover .book-title {

@@ -1,4 +1,4 @@
-/* Home Page - Classical & Luxury Dark Theme */
+/* Home Page - Classical & Luxury Natural Tones */
 
 .home-page {
   display: flex;
@@ -13,22 +13,52 @@
   position: relative;
   width: 100%;
   height: calc(100vh - 90px);
-  min-height: 500px;
+  min-height: 520px;
   max-height: 750px;
   overflow: hidden;
-  background-color: #0b131d;
+  isolation: isolate;
+  contain: paint;
+  background-color: #8b653d;
   background-image:
     radial-gradient(
-      circle at center,
-      rgba(197, 160, 89, 0.12) 0%,
-      transparent 65%
+      ellipse at 50% 42%,
+      rgba(255, 241, 193, 0.32),
+      transparent 55%
     ),
-    url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23c5a059' fill-opacity='0.06'%3E%3Cpath d='M0 0h80v80H0z' fill='none'/%3E%3Cpath d='M40 0l40 40-40 40L0 40z'/%3E%3Cpath d='M40 10l30 30-30 30-30-30z' fill='none' stroke='%23c5a059' stroke-width='1' stroke-opacity='0.08'/%3E%3C/g%3E%3C/svg%3E");
+    repeating-linear-gradient(
+      112deg,
+      rgba(255, 242, 194, 0.18) 0,
+      rgba(255, 242, 194, 0.18) 2px,
+      transparent 2px,
+      transparent 46px,
+      rgba(83, 48, 25, 0.14) 46px,
+      rgba(83, 48, 25, 0.14) 49px,
+      transparent 49px,
+      transparent 92px
+    ),
+    linear-gradient(115deg, #6d482b 0%, #b58b55 48%, #80552f 100%);
   border-top: 1px solid var(--gold-border, #c5a059);
-  border-bottom: 2px solid var(--gold-border, #c5a059);
+  border-bottom: 2px solid rgba(206, 176, 129, 0.58);
 }
 
-.hero-slider-section::before,
+.hero-slider-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  top: 0;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.1;
+  background-image: var(--active-slide-img);
+  background-position: center;
+  background-size: cover;
+  filter: blur(18px) saturate(0.7);
+  transform: scale(1.06);
+  will-change: opacity;
+  transition: opacity 0.5s ease;
+}
+
 .hero-slider-section::after {
   content: "";
   position: absolute;
@@ -39,23 +69,15 @@
   pointer-events: none;
 }
 
-.hero-slider-section::before {
-  top: 0;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(197, 160, 89, 0.5),
-    transparent
-  );
-}
-
 .hero-slider-section::after {
   bottom: 0;
+  height: 22%;
   background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(197, 160, 89, 0.5),
-    transparent
+    0deg,
+    rgba(255, 239, 178, 0.28),
+    rgba(206, 176, 129, 0.12) 16%,
+    rgba(74, 43, 24, 0.16) 38%,
+    transparent 72%
   );
 }
 
@@ -71,13 +93,14 @@
   opacity: 0;
   z-index: 1;
   transition:
-    opacity 0.8s ease-in-out,
-    transform 0.8s ease-in-out;
-  transform: scale(0.98);
+    opacity 1.05s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 1.05s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transform: scale(1.018);
+  will-change: opacity, transform;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2.5rem 1.5rem;
+  padding: 4.25rem 1.5rem 3.5rem;
 }
 
 .slider-slide.active {
@@ -88,69 +111,95 @@
 
 .slider-image-box {
   position: relative;
-  max-width: 100%;
   max-height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 8px;
-  background: rgba(15, 23, 33, 0.6);
-  border: 1px solid rgba(197, 160, 89, 0.35);
-  border-radius: 4px;
+  background: rgba(30, 10, 14, 0.34);
+  border: 1px solid rgba(232, 211, 167, 0.62);
+  border-radius: 2px;
   box-shadow:
-    0 20px 40px rgba(0, 0, 0, 0.7),
-    0 0 20px rgba(197, 160, 89, 0.15);
+    0 22px 50px rgba(18, 5, 8, 0.48),
+    0 0 0 4px rgba(206, 176, 129, 0.08),
+    0 0 30px rgba(206, 176, 129, 0.18);
+}
+
+.slider-image-box::before,
+.slider-image-box::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.slider-image-box::before {
+  inset: 5px;
+  border: 1px solid rgba(232, 211, 167, 0.34);
+}
+
+.slider-image-box::after {
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    rgba(255, 248, 227, 0.12),
+    transparent 28%,
+    transparent 75%,
+    rgba(37, 7, 12, 0.18)
+  );
 }
 
 .slider-image {
   max-width: 100%;
-  max-height: calc(100vh - 180px);
+  max-height: calc(100vh - 255px);
   width: auto;
   height: auto;
   object-fit: contain;
-  border-radius: 2px;
+  border-radius: 1px;
   display: block;
 }
 
 .slider-controls {
   position: absolute;
-  bottom: 1.5rem;
+  bottom: 0.3rem;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.8rem;
   z-index: 10;
-  padding: 0.5rem 1.25rem;
-  background: rgba(11, 19, 29, 0.85);
-  backdrop-filter: blur(10px);
+  padding: 0.65rem 1.1rem;
+  background: rgba(46, 15, 21, 0.88);
+  backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(10px);
-  border-radius: 30px;
-  border: 1px solid rgba(197, 160, 89, 0.3);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  border-radius: 3px;
+  border: 1px solid rgba(206, 176, 129, 0.52);
+  box-shadow:
+    0 8px 24px rgba(18, 5, 8, 0.34),
+    0 0 0 3px rgba(206, 176, 129, 0.08);
 }
 
 .slider-dot {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.25);
-  border: 1px solid rgba(197, 160, 89, 0.2);
+  background: rgba(232, 211, 167, 0.25);
+  border: 1px solid rgba(232, 211, 167, 0.45);
   cursor: pointer;
   transition: all 0.3s ease;
   padding: 0;
 }
 
 .slider-dot:hover {
-  background: rgba(197, 160, 89, 0.6);
+  background: rgba(206, 176, 129, 0.72);
 }
 
 .slider-dot.active {
-  width: 28px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #e6ca65, #c5a059);
-  border-color: #c5a059;
-  box-shadow: 0 0 10px rgba(197, 160, 89, 0.5);
+  width: 32px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #e8d3a7, #8b653d);
+  border-color: #ceb081;
+  box-shadow: 0 0 10px rgba(206, 176, 129, 0.38);
 }
 
 /* ==========================================================================
@@ -558,24 +607,25 @@
 
 @media (max-width: 768px) {
   .hero-slider-section {
-    height: 50vh;
-    min-height: 350px;
+    height: 55vh;
+    min-height: 330px;
   }
 
   .slider-slide {
-    padding: 1.25rem 0.75rem;
+    padding: 1.75rem 0.5rem 2.75rem;
   }
 
   .slider-image-box {
-    padding: 4px;
+    width: 96vw;
+    padding: 2px;
   }
 
   .slider-image {
-    max-height: calc(50vh - 80px);
+    max-height: calc(55vh - 75px);
   }
 
   .slider-controls {
-    bottom: 1rem;
+    bottom: 0.85rem;
     padding: 0.35rem 0.85rem;
   }
 

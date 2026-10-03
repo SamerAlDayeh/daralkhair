@@ -15,8 +15,15 @@ import {
 } from "lucide-react";
 import "./Home.css";
 
-import sliderImg1 from "../../Imgs/Slider-1.jpeg";
-import sliderImg2 from "../../Imgs/Slider-2.jpeg";
+const sliderImages = Object.entries(
+  import.meta.glob("../../Imgs/*.{jpg,jpeg,png,webp}", {
+    eager: true,
+    query: "?url",
+    import: "default",
+  }),
+)
+  .sort(([firstPath], [secondPath]) => firstPath.localeCompare(secondPath))
+  .map(([, imageUrl]) => imageUrl);
 
 // دالة آمنة لتنسيق الأسعار وتجنب أخطاء toFixed
 const formatPrice = (price) => {
@@ -76,8 +83,6 @@ export const Home = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMarqueePaused, setIsMarqueePaused] = useState(false);
 
-  const sliderImages = [sliderImg1, sliderImg2].filter(Boolean);
-
   // التأكد من وجود بيانات الكتب لمنع الأخطاء
   const booksList = Array.isArray(BOOKS_DATA) ? BOOKS_DATA : [];
   const marqueeBooks = [...booksList, ...booksList];
@@ -96,7 +101,10 @@ export const Home = () => {
     <div className="home-page font-arabic">
       {/* 1. HERO SLIDER SECTION */}
       {sliderImages.length > 0 && (
-        <section className="hero-slider-section">
+        <section
+          className="hero-slider-section"
+          style={{ "--active-slide-img": `url(${sliderImages[currentSlide]})` }}
+        >
           <div className="slider-wrapper">
             {sliderImages.map((src, index) => (
               <div
