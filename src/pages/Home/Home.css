@@ -12,73 +12,10 @@
 .hero-slider-section {
   position: relative;
   width: 100%;
-  height: calc(100vh - 90px);
-  min-height: 520px;
-  max-height: 750px;
+  height: min(calc(100svh - 76px), 56.25vw);
   overflow: hidden;
   isolation: isolate;
   contain: paint;
-  background-color: #8b653d;
-  background-image:
-    radial-gradient(
-      ellipse at 50% 42%,
-      rgba(255, 241, 193, 0.32),
-      transparent 55%
-    ),
-    repeating-linear-gradient(
-      112deg,
-      rgba(255, 242, 194, 0.18) 0,
-      rgba(255, 242, 194, 0.18) 2px,
-      transparent 2px,
-      transparent 46px,
-      rgba(83, 48, 25, 0.14) 46px,
-      rgba(83, 48, 25, 0.14) 49px,
-      transparent 49px,
-      transparent 92px
-    ),
-    linear-gradient(115deg, #6d482b 0%, #b58b55 48%, #80552f 100%);
-  border-top: 1px solid var(--gold-border, #c5a059);
-  border-bottom: 2px solid rgba(206, 176, 129, 0.58);
-}
-
-.hero-slider-section::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  top: 0;
-  height: 100%;
-  pointer-events: none;
-  opacity: 0.1;
-  background-image: var(--active-slide-img);
-  background-position: center;
-  background-size: cover;
-  filter: blur(18px) saturate(0.7);
-  transform: scale(1.06);
-  will-change: opacity;
-  transition: opacity 0.5s ease;
-}
-
-.hero-slider-section::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 6px;
-  z-index: 5;
-  pointer-events: none;
-}
-
-.hero-slider-section::after {
-  bottom: 0;
-  height: 22%;
-  background: linear-gradient(
-    0deg,
-    rgba(255, 239, 178, 0.28),
-    rgba(206, 176, 129, 0.12) 16%,
-    rgba(74, 43, 24, 0.16) 38%,
-    transparent 72%
-  );
 }
 
 .slider-wrapper {
@@ -92,70 +29,29 @@
   inset: 0;
   opacity: 0;
   z-index: 1;
-  transition:
-    opacity 1.05s cubic-bezier(0.22, 0.61, 0.36, 1),
-    transform 1.05s cubic-bezier(0.22, 0.61, 0.36, 1);
-  transform: scale(1.018);
-  will-change: opacity, transform;
+  transition: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4.25rem 1.5rem 3.5rem;
 }
 
 .slider-slide.active {
   opacity: 1;
   z-index: 2;
-  transform: scale(1);
 }
 
 .slider-image-box {
   position: relative;
-  max-height: 100%;
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px;
-  background: rgba(30, 10, 14, 0.34);
-  border: 1px solid rgba(232, 211, 167, 0.62);
-  border-radius: 2px;
-  box-shadow:
-    0 22px 50px rgba(18, 5, 8, 0.48),
-    0 0 0 4px rgba(206, 176, 129, 0.08),
-    0 0 30px rgba(206, 176, 129, 0.18);
-}
-
-.slider-image-box::before,
-.slider-image-box::after {
-  content: "";
-  position: absolute;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.slider-image-box::before {
-  inset: 5px;
-  border: 1px solid rgba(232, 211, 167, 0.34);
-}
-
-.slider-image-box::after {
-  inset: 0;
-  background: linear-gradient(
-    115deg,
-    rgba(255, 248, 227, 0.12),
-    transparent 28%,
-    transparent 75%,
-    rgba(37, 7, 12, 0.18)
-  );
 }
 
 .slider-image {
-  max-width: 100%;
-  max-height: calc(100vh - 255px);
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  border-radius: 1px;
+  width: 100%;
+  height: 100%;
   display: block;
 }
 
@@ -168,15 +64,6 @@
   align-items: center;
   gap: 0.8rem;
   z-index: 10;
-  padding: 0.65rem 1.1rem;
-  background: rgba(46, 15, 21, 0.88);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(10px);
-  border-radius: 3px;
-  border: 1px solid rgba(206, 176, 129, 0.52);
-  box-shadow:
-    0 8px 24px rgba(18, 5, 8, 0.34),
-    0 0 0 3px rgba(206, 176, 129, 0.08);
 }
 
 .slider-dot {
@@ -606,27 +493,8 @@
 }
 
 @media (max-width: 768px) {
-  .hero-slider-section {
-    height: 55vh;
-    min-height: 330px;
-  }
-
-  .slider-slide {
-    padding: 1.75rem 0.5rem 2.75rem;
-  }
-
-  .slider-image-box {
-    width: 96vw;
-    padding: 2px;
-  }
-
-  .slider-image {
-    max-height: calc(55vh - 75px);
-  }
-
   .slider-controls {
     bottom: 0.85rem;
-    padding: 0.35rem 0.85rem;
   }
 
   /* تصغير إضافي لكروت العرض المتحرك على الموبايل */
