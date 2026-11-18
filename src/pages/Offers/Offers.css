@@ -78,15 +78,20 @@
 .offers-page-bundle-img-box {
   position: relative;
   width: 100%;
-  height: 240px;
+  aspect-ratio: 5 / 7;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-secondary, #080d14);
   border-bottom: 1px solid rgba(197, 160, 89, 0.2);
 }
 
 .offers-page-bundle-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  padding: 0.25rem;
   transition: transform 0.5s ease;
 }
 

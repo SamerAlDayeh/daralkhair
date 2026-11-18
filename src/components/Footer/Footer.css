@@ -129,6 +129,16 @@
   line-height: 1.5;
 }
 
+.contact-info-list a {
+  color: inherit;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.contact-info-list a:hover {
+  color: var(--gold-light, #e6ca65);
+}
+
 .contact-icon {
   color: var(--gold-primary, #c5a059);
   margin-top: 3px;
@@ -151,17 +161,33 @@
 
 .footer-socials {
   display: flex;
-  gap: 1.5rem;
+  gap: 0.65rem;
 }
 
 .footer-socials a {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
   color: var(--text-secondary, #a0aec0);
+  border: 1px solid var(--gold-border, rgba(197, 160, 89, 0.3));
+  border-radius: 50%;
   text-decoration: none;
-  transition: color 0.25s ease;
+  transition:
+    color 0.25s ease,
+    border-color 0.25s ease,
+    background-color 0.25s ease;
 }
 
 .footer-socials a:hover {
   color: var(--gold-light, #e6ca65);
+  border-color: var(--gold-light, #e6ca65);
+  background: var(--gold-glow, rgba(197, 160, 89, 0.08));
+}
+
+.footer-socials a:focus-visible {
+  outline: 2px solid var(--gold-light, #e6ca65);
+  outline-offset: 3px;
 }
 
 /* Responsive Breakpoints */

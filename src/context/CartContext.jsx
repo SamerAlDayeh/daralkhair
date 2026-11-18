@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { applyBookDiscount, hasBookPrice } from "../utils/pricing";
 
 const CartContext = createContext();
 
@@ -6,7 +7,12 @@ export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState(() => {
     try {
       const saved = localStorage.getItem("dar_al_khair_cart");
-      return saved ? JSON.parse(saved) : [];
+      return saved
+        ? JSON.parse(saved).map((item) => ({
+            ...item,
+            book: applyBookDiscount(item.book),
+          }))
+        : [];
     } catch {
       return [];
     }
@@ -38,18 +44,32 @@ export const CartProvider = ({ children }) => {
   };
 
   const addToCart = (book, quantity = 1) => {
+    const discountedBook = applyBookDiscount(book);
+    if (!hasBookPrice(discountedBook)) {
+      showToast("لا يمكن إضافة الكتاب إلى السلة قبل تحديد سعره.", "error");
+      return;
+    }
+
     setCart((prev) => {
-      const existing = prev.find((item) => item.book.id === book.id);
+      const existing = prev.find((item) => item.book.id === discountedBook.id);
       if (existing) {
         return prev.map((item) =>
-          item.book.id === book.id
-            ? { ...item, quantity: item.quantity + quantity }
+          item.book.id === discountedBook.id
+            ? {
+                ...item,
+                book:
+                  discountedBook.discountPercent >
+                  (Number(item.book.discountPercent) || 0)
+                    ? discountedBook
+                    : item.book,
+                quantity: item.quantity + quantity,
+              }
             : item,
         );
       }
-      return [...prev, { book, quantity }];
+      return [...prev, { book: discountedBook, quantity }];
     });
-    showToast(`Added "${book.title}" to cart`, "success");
+    showToast(`Added "${discountedBook.title}" to cart`, "success");
   };
 
   const removeFromCart = (bookId) => {
@@ -79,7 +99,9 @@ export const CartProvider = ({ children }) => {
 
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = cart.reduce(
-    (sum, item) => sum + item.book.price * item.quantity,
+    (sum, item) =>
+      sum +
+      (hasBookPrice(item.book) ? Number(item.book.price) * item.quantity : 0),
     0,
   );
 

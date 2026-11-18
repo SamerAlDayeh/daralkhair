@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import "./Cart.css";
 
-const WHATSAPP_NUMBER = "966148224900";
+const WHATSAPP_NUMBER = "201068551788";
 
 export const Cart = () => {
   const { cart, removeFromCart, updateQuantity, clearCart, totalPrice } =
@@ -25,7 +25,7 @@ export const Cart = () => {
     phone: "",
     address: "",
     city: "",
-    country: "المملكة العربية السعودية",
+    country: "الجمهورية العربية السورية",
     notes: "",
   });
 
@@ -69,9 +69,8 @@ export const Cart = () => {
     });
 
     text += `----------------------------------------\n`;
-    text += `• المجموع الفرعي: $${totalPrice.toFixed(2)}\n`;
     text += `• *الإجمالي الكلي: $${grandTotal.toFixed(2)}*\n`;
-    text += `\n_تم إرسال الطلب عبر موقع دار الخير الرسمي_`;
+    text += `\nتم إرسال الطلب عبر موقع دار الخير الرسمي`;
 
     return encodeURIComponent(text);
   };
@@ -254,7 +253,7 @@ export const Cart = () => {
                         required
                         value={customer.phone}
                         onChange={handleInputChange}
-                        placeholder="+966 50 123 4567"
+                        placeholder="+963 123 456 789"
                         className="form-input"
                       />
                     </div>
@@ -283,7 +282,7 @@ export const Cart = () => {
                           required
                           value={customer.city}
                           onChange={handleInputChange}
-                          placeholder="الرياض / جدة / دبي"
+                          placeholder="ادخل اسم المدينة"
                           className="form-input"
                         />
                       </div>
@@ -297,6 +296,9 @@ export const Cart = () => {
                           onChange={handleInputChange}
                           className="form-input"
                         >
+                          <option value="الجمهورية العربية السورية">
+                            الجمهورية العربية السورية
+                          </option>
                           <option value="المملكة العربية السعودية">
                             المملكة العربية السعودية
                           </option>

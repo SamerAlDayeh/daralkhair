@@ -105,6 +105,12 @@
   filter: brightness(1.15);
 }
 
+.add-cart-btn:disabled {
+  cursor: not-allowed;
+  filter: grayscale(0.5);
+  opacity: 0.7;
+}
+
 /* 🟢 تم تعديل موضع الشارات لليمين لتتوافق مع RTL */
 .book-badges {
   position: absolute;

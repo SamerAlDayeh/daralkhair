@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useCart } from "../../context/CartContext";
+import { applyBookDiscount, hasBookPrice } from "../../utils/pricing";
 import {
   X,
   ShoppingBag,
@@ -65,6 +66,9 @@ export const QuickViewModal = ({ book, onClose }) => {
   // 3. إيقاف التنفيذ بعد الـ Hooks في حال عدم وجود كتاب
   if (!book) return null;
 
+  const discountedBook = applyBookDiscount(book);
+  const canPurchase = hasBookPrice(discountedBook);
+
   // 4. استخراج كافة الصور بمرونة مع منع التكرار
   const coverImg = getCoverImage(book);
   const insideImgs = getInsideImages(book);
@@ -75,10 +79,12 @@ export const QuickViewModal = ({ book, onClose }) => {
 
   // التحقق من وجود المواصفات
   const isbnValue = book.ISBN || book.isbn;
-  const hasSpecs = Boolean(book.publisher || book.year || isbnValue);
+  const hasSpecs = Boolean(
+    book.publisher || book.year || isbnValue || book.investigator,
+  );
 
   const handleAddToCart = () => {
-    addToCart(book, quantity);
+    addToCart(discountedBook, quantity);
     onClose();
   };
 
@@ -143,9 +149,19 @@ export const QuickViewModal = ({ book, onClose }) => {
                 </div>
               )}
 
-              {book.price !== undefined && (
+              {canPurchase && (
                 <div className="quickview-price-row">
-                  <span className="price">${formatPrice(book.price)}</span>
+                  <span className="price">
+                    ${formatPrice(discountedBook.price)}
+                  </span>
+                  {discountedBook.originalPrice !== undefined && (
+                    <span className="original-price">
+                      ${formatPrice(discountedBook.originalPrice)}
+                    </span>
+                  )}
+                  <span className="discount-tag">
+                    خصم {discountedBook.discountPercent}%
+                  </span>
                 </div>
               )}
 
@@ -161,6 +177,14 @@ export const QuickViewModal = ({ book, onClose }) => {
                       <Building2 size={15} className="spec-icon" />
                       <span>
                         دار النشر: <strong>{book.publisher}</strong>
+                      </span>
+                    </div>
+                  )}
+
+                  {book.investigator && (
+                    <div className="spec-item">
+                      <span>
+                        المحقق: <strong>{book.investigator}</strong>
                       </span>
                     </div>
                   )}
@@ -207,9 +231,19 @@ export const QuickViewModal = ({ book, onClose }) => {
                 <button
                   className="btn-gold flex-1 font-arabic"
                   onClick={handleAddToCart}
+                  disabled={!canPurchase}
+                  title={
+                    canPurchase
+                      ? "أضف إلى سلة الشراء"
+                      : "سيُتاح الطلب بعد تحديد السعر"
+                  }
                 >
                   <ShoppingBag size={18} />
-                  <span>أضف إلى سلة الشراء</span>
+                  <span>
+                    {canPurchase
+                      ? "أضف إلى سلة الشراء"
+                      : "سيُتاح الطلب بعد تحديد السعر"}
+                  </span>
                 </button>
               </div>
             </div>

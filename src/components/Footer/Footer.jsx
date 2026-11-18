@@ -1,8 +1,25 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import {
+  Facebook,
+  Instagram,
+  Mail,
+  MapPin,
+  MessageCircle,
+  Send,
+  Twitter,
+} from "lucide-react";
 import BOOKS_DATA from "../../data/Books.json";
+import { SOCIAL_LINKS } from "../../data/socialLinks";
 import "./Footer.css";
+
+const SOCIAL_ICONS = {
+  facebook: Facebook,
+  x: Twitter,
+  instagram: Instagram,
+  telegram: Send,
+  whatsapp: MessageCircle,
+};
 
 const BOOK_CATEGORIES = [
   ...new Set(BOOKS_DATA.map((book) => book.category).filter(Boolean)),
@@ -21,14 +38,11 @@ export const Footer = () => {
                 alt="شعار دار الخير للنشر والتوزيع"
                 className="footer-logo"
               />
-              <span className="footer-founded font-arabic">
-                تأسست عام 2015م
-              </span>
             </div>
             <p className="footer-about-text font-arabic">
-              دار نشر مخصصة لتحقيق وتذهيب وطباعة أمهات كتب التراث الإسلامي
-              وتفسير القرآن والحديث الشريف بأسلوب علمي فاخر يعكس أصالة الفكر
-              الإسلامي.
+              دار نشر تأسست في إسطنبول عام 2015م، تُعنى بنشر التراث الإسلامي في
+              مجالات التفسير والحديث والفقه واللغة والأدب، تحت شعار: «تراثنا
+              مجد أمتنا».
             </p>
             <div className="footer-blessing font-arabic">
               "مَنْ سَلَكَ طَرِيقًا يَلْتَمِسُ فِيهِ عِلْمًا سَهَّلَ اللَّهُ
@@ -74,26 +88,19 @@ export const Footer = () => {
 
           {/* Col 4: Contact */}
           <div className="footer-col contact-col">
-            <h4 className="footer-heading font-arabic">العنوان والتواصل</h4>
+            <h4 className="footer-heading font-arabic">الفروع والتواصل</h4>
             <ul className="contact-info-list font-arabic">
               <li>
                 <MapPin size={18} className="contact-icon" />
                 <span>
-                  طريق الملك عبد العزيز، المدينة المنورة، المملكة العربية
-                  السعودية
+                  فروع الدار: القاهرة، بيروت، دمشق
                 </span>
               </li>
               <li>
-                <Phone size={18} className="contact-icon" />
-                <span dir="ltr">+966 14 822 4900 / +20 2 2401 5520</span>
-              </li>
-              <li>
                 <Mail size={18} className="contact-icon" />
-                <span>contact@daralkhairpublishers.com</span>
-              </li>
-              <li>
-                <Clock size={18} className="contact-icon" />
-                <span>الأحد - الخميس: 9:00 صباحاً - 8:00 مساءً</span>
+                <a href="mailto:darulhayrnashron@gmail.com">
+                  darulhayrnashron@gmail.com
+                </a>
               </li>
             </ul>
           </div>
@@ -106,18 +113,22 @@ export const Footer = () => {
             محفوظة.
           </div>
           <div className="footer-socials font-arabic">
-            <a href="#twitter" aria-label="Twitter">
-              تويتر
-            </a>
-            <a href="#facebook" aria-label="Facebook">
-              فيسبوك
-            </a>
-            <a href="#instagram" aria-label="Instagram">
-              انستغرام
-            </a>
-            <a href="#youtube" aria-label="YouTube">
-              يوتيوب
-            </a>
+            {SOCIAL_LINKS.map(({ name, label, href }) => (
+              <a
+                key={name}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`حساب دار الخير على ${label}`}
+                title={label}
+                className={`footer-social-link ${name}`}
+              >
+                {React.createElement(SOCIAL_ICONS[name], {
+                  size: 19,
+                  "aria-hidden": true,
+                })}
+              </a>
+            ))}
           </div>
         </div>
       </div>

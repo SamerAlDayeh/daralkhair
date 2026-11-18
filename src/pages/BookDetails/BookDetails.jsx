@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import BOOKS_DATA from "../../data/Books.json";
 import { useCart } from "../../context/CartContext";
 import { GoldBorderFrame } from "../../components/GoldBorderFrame/GoldBorderFrame";
+import { applyBookDiscount, hasBookPrice } from "../../utils/pricing";
 import {
   ShoppingBag,
   Star,
@@ -24,8 +25,14 @@ const formatPrice = (price) => {
 
 const getBookImages = (book) => {
   if (!book) return [];
-  return [1, 2, 3].map(
-    (imageNumber) => `/BooksImgs/${book.id}/${imageNumber}.webp`,
+  const imageExtension = book.imageExtension || "webp";
+  const imageCount =
+    Number.isInteger(book.imageCount) && book.imageCount > 0
+      ? book.imageCount
+      : 3;
+  return Array.from(
+    { length: imageCount },
+    (_, index) => `/BooksImgs/${book.id}/${index + 1}.${imageExtension}`,
   );
 };
 
@@ -61,6 +68,9 @@ export const BookDetails = () => {
     );
   }
 
+  const discountedBook = applyBookDiscount(book);
+  const canPurchase = hasBookPrice(discountedBook);
+
   // استخراج وتحضير كافة الصور
   const allImages = getBookImages(book);
   const coverImg = allImages[0];
@@ -72,7 +82,7 @@ export const BookDetails = () => {
   const descriptionText = book.longDescription || book.description || book.desc;
 
   const handleAddToCart = () => {
-    addToCart(book, quantity);
+    addToCart(discountedBook, quantity);
   };
 
   return (
@@ -84,8 +94,12 @@ export const BookDetails = () => {
             <ArrowRight size={16} />
             <span>العودة للمكتبة</span>
           </Link>
-          <span className="breadcrumb-sep">/</span>
-          <span className="breadcrumb-cat">{book.category}</span>
+          {book.category && (
+            <>
+              <span className="breadcrumb-sep">/</span>
+              <span className="breadcrumb-cat">{book.category}</span>
+            </>
+          )}
           <span className="breadcrumb-sep">/</span>
           <span className="breadcrumb-title">{book.title}</span>
         </div>
@@ -172,21 +186,21 @@ export const BookDetails = () => {
             )}
 
             {/* Price Row */}
-            {book.price !== undefined && (
+            {canPurchase && (
               <div className="details-price-card">
                 <div className="price-box">
-                  <span className="price">${formatPrice(book.price)}</span>
-                  {book.originalPrice && (
+                  <span className="price">
+                    ${formatPrice(discountedBook.price)}
+                  </span>
+                  {discountedBook.originalPrice !== undefined && (
                     <span className="original">
-                      ${formatPrice(book.originalPrice)}
+                      ${formatPrice(discountedBook.originalPrice)}
                     </span>
                   )}
                 </div>
-                {book.discountPercent && (
-                  <span className="savings-badge">
-                    وفر {book.discountPercent}% مباشر
-                  </span>
-                )}
+                <span className="savings-badge">
+                  وفر {discountedBook.discountPercent}% مباشر
+                </span>
               </div>
             )}
 
@@ -212,9 +226,19 @@ export const BookDetails = () => {
               <button
                 className="btn-gold add-cart-large"
                 onClick={handleAddToCart}
+                disabled={!canPurchase}
+                title={
+                  canPurchase
+                    ? "أضف إلى سلة الشراء"
+                    : "سيُتاح الطلب بعد تحديد السعر"
+                }
               >
                 <ShoppingBag size={20} />
-                <span>أضف إلى سلة الشراء</span>
+                <span>
+                  {canPurchase
+                    ? "أضف إلى سلة الشراء"
+                    : "سيُتاح الطلب بعد تحديد السعر"}
+                </span>
               </button>
             </div>
 
@@ -230,6 +254,13 @@ export const BookDetails = () => {
                     {book.publisher || "غير محدد"}
                   </span>
                 </div>
+
+                {book.investigator && (
+                  <div className="spec-row">
+                    <span className="spec-label">المحقق:</span>
+                    <span className="spec-val">{book.investigator}</span>
+                  </div>
+                )}
 
                 <div className="spec-row">
                   <span className="spec-label">

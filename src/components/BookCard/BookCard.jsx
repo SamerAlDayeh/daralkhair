@@ -2,18 +2,25 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { ShoppingBag, Eye } from "lucide-react";
+import { applyBookDiscount, hasBookPrice } from "../../utils/pricing";
 import "./BookCard.css";
 
 export const BookCard = ({ book, onQuickView }) => {
   const { addToCart } = useCart();
+  const discountedBook = applyBookDiscount(book);
+  const canPurchase = hasBookPrice(discountedBook);
 
   // المسارات الخاصة بصور الكتاب داخل مجلد public/BooksImgs/{id}/
-  const coverImage = `/BooksImgs/${book.id}/1.webp`;
-  const internalImage1 = `/BooksImgs/${book.id}/2.webp`;
-  const internalImage2 = `/BooksImgs/${book.id}/3.webp`;
-
-  // مصفوفة كامل الصور لاستخدامها في المعاينة السريعة والمعرض
-  const bookImages = [coverImage, internalImage1, internalImage2];
+  const imageExtension = book.imageExtension || "webp";
+  const imageCount =
+    Number.isInteger(book.imageCount) && book.imageCount > 0
+      ? book.imageCount
+      : 3;
+  const bookImages = Array.from(
+    { length: imageCount },
+    (_, index) => `/BooksImgs/${book.id}/${index + 1}.${imageExtension}`,
+  );
+  const coverImage = bookImages[0];
 
   const handleQuickView = () => {
     if (onQuickView) {
@@ -55,35 +62,44 @@ export const BookCard = ({ book, onQuickView }) => {
             )}
             <button
               className="action-btn add-cart-btn font-arabic"
-              onClick={() => addToCart({ ...book, coverImage }, 1)}
-              title="أضف إلى السلة"
+              disabled={!canPurchase}
+              onClick={() =>
+                addToCart({ ...discountedBook, coverImage }, 1)
+              }
+              title={
+                canPurchase
+                  ? "أضف إلى السلة"
+                  : "سيُتاح الطلب بعد تحديد السعر"
+              }
               aria-label="أضف الكتاب إلى سلة الشراء"
             >
               <ShoppingBag size={18} />
-              <span>أضف للسلة</span>
+              <span>{canPurchase ? "أضف للسلة" : "السعر يحدد لاحقًا"}</span>
             </button>
           </div>
 
           {/* Badges */}
           <div className="book-badges font-arabic">
-            {book.isOffer && book.discountPercent && (
-              <span className="badge discount-badge">
-                خصم {book.discountPercent}%
-              </span>
-            )}
+            <span className="badge discount-badge">
+              خصم {discountedBook.discountPercent}%
+            </span>
             {book.isNew && <span className="badge new-badge">إصدار حديث</span>}
           </div>
         </div>
 
         {/* Info */}
         <div className="book-info">
-          <div className="book-category font-arabic">{book.category}</div>
+          {book.category && (
+            <div className="book-category font-arabic">{book.category}</div>
+          )}
           <Link to={`/books/${book.id}`} className="book-title-link">
             <h3 className="book-title font-arabic">{book.title}</h3>
           </Link>
-          <div className="book-author font-arabic">
-            بقلم: {book.authorArabic || book.author}
-          </div>
+          {(book.authorArabic || book.author) && (
+            <div className="book-author font-arabic">
+              بقلم: {book.authorArabic || book.author}
+            </div>
+          )}
 
           {/* Rating */}
           <div className="book-rating">
@@ -93,15 +109,16 @@ export const BookCard = ({ book, onQuickView }) => {
           {/* Footer / Pricing */}
           <div className="book-card-footer">
             <div className="book-price-box">
-              <span className="current-price">
-                $
-                {typeof book.price === "number"
-                  ? book.price.toFixed(2)
-                  : book.price}
-              </span>
-              {book.originalPrice && (
+              {canPurchase ? (
+                <span className="current-price">
+                  ${discountedBook.price.toFixed(2)}
+                </span>
+              ) : (
+                <span className="current-price">السعر يحدد لاحقًا</span>
+              )}
+              {canPurchase && discountedBook.originalPrice !== undefined && (
                 <span className="original-price">
-                  ${book.originalPrice.toFixed(2)}
+                  ${discountedBook.originalPrice.toFixed(2)}
                 </span>
               )}
             </div>

@@ -63,11 +63,11 @@
   color: #fff;
 }
 
-.social-icon-btn.youtube:hover,
-.social-icon-btn.youtube:focus-visible {
+.social-icon-btn.x:hover,
+.social-icon-btn.x:focus-visible {
   width: 150px;
-  border-color: #ff0000;
-  background: #ff0000;
+  border-color: #000;
+  background: #000;
   color: #fff;
 }
 
@@ -84,6 +84,14 @@
   width: 150px;
   border-color: #229ed9;
   background: #229ed9;
+  color: #fff;
+}
+
+.social-icon-btn.whatsapp:hover,
+.social-icon-btn.whatsapp:focus-visible {
+  width: 160px;
+  border-color: #25d366;
+  background: #25d366;
   color: #fff;
 }
 

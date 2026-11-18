@@ -7,12 +7,13 @@ import { QuickViewModal } from "../../components/QuickViewModal/QuickViewModal";
 import { IslamicPattern } from "../../components/IslamicPattern/IslamicPattern";
 import { Search, SlidersHorizontal, RefreshCw, BookOpen } from "lucide-react";
 import { motion } from "framer-motion"; // تم تعديل المسار ليكون framer-motion القياسي (تأكد من الحزمة لديك)
+import { applyBookDiscount, hasBookPrice } from "../../utils/pricing";
 import "./Books.css";
 
 // استخراج التصنيفات ديناميكياً من البيانات
 const CATEGORIES = [
   "جميع التصنيفات",
-  ...new Set(booksData.map((book) => book.category)),
+  ...new Set(booksData.map((book) => book.category).filter(Boolean)),
 ];
 
 export const Books = () => {
@@ -35,7 +36,10 @@ export const Books = () => {
 
   // حساب أعلى سعر في الكتالوج ديناميكياً
   const maxPriceInCatalog = useMemo(() => {
-    const max = Math.max(...booksData.map((b) => b.price));
+    const prices = booksData
+      .map((book) => applyBookDiscount(book).price)
+      .filter(Number.isFinite);
+    const max = prices.length ? Math.max(...prices) : 50;
     return max < 50 ? 50 : max; // وضع حد أدنى منطقي لشريط السحب
   }, []);
 
@@ -63,15 +67,32 @@ export const Books = () => {
           book.category === selectedCategory;
 
         // فلتر السعر
-        const matchesPrice = book.price <= priceRange;
+        const matchesPrice =
+          !hasBookPrice(book) ||
+          applyBookDiscount(book).price <= priceRange;
 
         return matchesSearch && matchesCategory && matchesPrice;
       })
       .sort((a, b) => {
-        if (sortBy === "price-desc") return b.price - a.price;
-        if (sortBy === "price-asc") return a.price - b.price;
-        if (sortBy === "newest") return b.year - a.year; // بناء على حقل year
-        if (sortBy === "oldest") return a.year - b.year;
+        if (sortBy === "price-desc" || sortBy === "price-asc") {
+          const aHasPrice = hasBookPrice(a);
+          const bHasPrice = hasBookPrice(b);
+          if (aHasPrice !== bHasPrice) return aHasPrice ? -1 : 1;
+          if (!aHasPrice) return 0;
+
+          const priceDifference =
+            applyBookDiscount(a).price - applyBookDiscount(b).price;
+          return sortBy === "price-desc" ? -priceDifference : priceDifference;
+        }
+        if (sortBy === "newest" || sortBy === "oldest") {
+          const aYear = Number(a.year);
+          const bYear = Number(b.year);
+          const aHasYear = Number.isFinite(aYear);
+          const bHasYear = Number.isFinite(bYear);
+          if (aHasYear !== bHasYear) return aHasYear ? -1 : 1;
+          if (!aHasYear) return 0;
+          return sortBy === "newest" ? bYear - aYear : aYear - bYear;
+        }
         return 0; // الافتراضي
       });
   }, [searchQuery, selectedCategory, priceRange, sortBy]);

@@ -13,7 +13,14 @@ export const Offers = () => {
   const [quickViewBook, setQuickViewBook] = useState(null);
   const [copiedCode, setCopiedCode] = useState(null);
 
-  const offerBooks = BOOKS_DATA.filter((b) => b.isOffer);
+  const specialOfferBookIds = new Set(
+    SPECIAL_OFFERS.flatMap((offer) =>
+      offer.bundleBookIds.map((id) => String(id)),
+    ),
+  );
+  const offerBooks = BOOKS_DATA.filter(
+    (book) => !specialOfferBookIds.has(String(book.id)),
+  );
 
   const getBundleBooks = (bundleBookIds = []) => {
     return bundleBookIds
@@ -29,7 +36,15 @@ export const Offers = () => {
 
   const handleAddBundleToCart = (offer) => {
     const books = getBundleBooks(offer.bundleBookIds);
-    books.forEach((b) => addToCart(b, 1));
+    books.forEach((book) =>
+      addToCart(
+        {
+          ...book,
+          discountPercent: offer.discountPercent || 50,
+        },
+        1,
+      ),
+    );
   };
 
   return (
@@ -47,13 +62,13 @@ export const Offers = () => {
         </div>
       </section>
 
-      {/* 2. SPECIAL BUNDLES SECTION */}
+      {/* 2. SPECIAL INDIVIDUAL OFFERS SECTION */}
       {SPECIAL_OFFERS && SPECIAL_OFFERS.length > 0 && (
         <section className="offers-page-bundles-section">
           <div className="container">
             <div className="section-header">
-              <span className="section-subtitle">باقات خاصة</span>
-              <h2 className="section-title">المجموعات والعروض الكبرى</h2>
+              <span className="section-subtitle">عروض خاصة</span>
+              <h2 className="section-title">خصومات خاصة على كتب مختارة</h2>
               <div className="ornament-divider">
                 <span className="ornament-symbol">✦ ۞ ✦</span>
               </div>
@@ -71,7 +86,9 @@ export const Offers = () => {
                       alt={offer.title}
                       className="offers-page-bundle-img"
                     />
-                    <span className="offers-page-bundle-badge">عرض خاص</span>
+                    <span className="offers-page-bundle-badge">
+                      {offer.discountBadge || "عرض خاص"}
+                    </span>
                   </div>
 
                   <div className="offers-page-bundle-content">
