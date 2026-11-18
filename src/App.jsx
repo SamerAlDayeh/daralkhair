@@ -4,6 +4,7 @@ import { ThemeProvider } from "./context/ThemeContext";
 import { CartProvider } from "./context/CartContext";
 import { Navbar } from "./components/Navbar/Navbar";
 import { Footer } from "./components/Footer/Footer";
+import { FloatingSocialSidebar } from "./components/FloatingSocialSidebar/FloatingSocialSidebar";
 import { Toast } from "./components/Toast/Toast";
 import { ScrollToTop } from "./components/ScrollToTop";
 
@@ -23,6 +24,7 @@ export default function App() {
           <ScrollToTop />
           <div className="app-layout">
             <Navbar />
+            <FloatingSocialSidebar />
             <main className="app-main-content">
               <Routes>
                 <Route path="/" element={<Home />} />

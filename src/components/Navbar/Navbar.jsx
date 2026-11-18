@@ -39,23 +39,13 @@ export const Navbar = () => {
     <>
       <header className={`navbar-header ${isScrolled ? "scrolled" : ""}`}>
         <div className="container navbar-container">
-          {/* Brand Logo */}
           <Link to="/" className="navbar-brand" onClick={closeMobileMenu}>
-            <div className="brand-icon-wrapper">
-              <div className="brand-icon-box rotate-45">
-                <span className="-rotate-45 brand-arabic-symbol font-bold text-[#CEB081]">
-                  DK
-                </span>
-              </div>
-            </div>
-            <div className="brand-text-box">
-              <span className="brand-name font-arabic font-bold text-lg">
-                دار الخير
-              </span>
-              <span className="brand-subtext font-arabic">
-                للنشر والتوزيع — تأسست 1978
-              </span>
-            </div>
+            <img
+              src="/logo.webp"
+              alt="شعار دار الخير للنشر والتوزيع"
+              className="navbar-logo"
+            />
+            <span className="navbar-founded font-arabic">تأسست عام 2015م</span>
           </Link>
 
           {/* Desktop Nav Links */}
@@ -128,9 +118,16 @@ export const Navbar = () => {
         <div className="mobile-drawer-backdrop" onClick={closeMobileMenu}>
           <div className="mobile-drawer" onClick={(e) => e.stopPropagation()}>
             <div className="mobile-drawer-header">
-              <span className="brand-name font-arabic font-bold text-lg">
-                دار الخير للنشر
-              </span>
+              <div className="mobile-drawer-brand">
+                <img
+                  src="/logo.webp"
+                  alt="شعار دار الخير للنشر والتوزيع"
+                  className="mobile-drawer-logo"
+                />
+                <span className="mobile-drawer-founded font-arabic">
+                  تأسست عام 2015
+                </span>
+              </div>
               <button className="mobile-drawer-close" onClick={closeMobileMenu}>
                 <X size={20} />
               </button>

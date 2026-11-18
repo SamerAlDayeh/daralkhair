@@ -24,66 +24,24 @@
   justify-content: space-between;
 }
 
-/* Brand Logo Styling */
 .navbar-brand {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.75rem;
   text-decoration: none;
 }
 
-.brand-icon-wrapper {
-  padding: 4px;
+.navbar-logo {
+  display: block;
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
 }
 
-.brand-icon-box {
-  width: 38px;
-  height: 38px;
-  background-color: #465157;
-  border: 1px solid var(--gold-light, #e6ca65);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform: rotate(45deg);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-  transition: transform 0.3s ease;
-}
-
-/* تم تصحيح اسم الكلاس هنا لتعمل الحركة عند التحويم */
-.navbar-brand:hover .brand-icon-box {
-  transform: rotate(225deg);
-}
-
-.brand-arabic-symbol {
+.navbar-founded {
   color: var(--gold-light, #e6ca65);
   font-size: 0.85rem;
-  font-weight: 800;
-  letter-spacing: 0.5px;
-  transform: rotate(-45deg);
-  display: inline-block;
-}
-
-.brand-text-box {
-  display: flex;
-  flex-direction: column;
-}
-
-.brand-name {
-  font-size: 1.15rem;
-  font-weight: 800;
-  letter-spacing: 0.18em;
-  color: var(--gold-light, #e6ca65);
-  line-height: 1.1;
-  text-transform: uppercase;
-}
-
-.brand-subtext {
-  font-size: 0.65rem;
-  color: var(--text-muted, #9ca3af);
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  margin-top: 3px;
-  opacity: 0.75;
+  white-space: nowrap;
 }
 
 /* Desktop Navigation Links */
@@ -247,6 +205,24 @@
   padding-bottom: 1rem;
   border-bottom: 1px solid var(--gold-border, #c5a059);
   margin-bottom: 1.5rem;
+}
+
+.mobile-drawer-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.mobile-drawer-logo {
+  display: block;
+  width: 84px;
+  height: 84px;
+  object-fit: contain;
+}
+
+.mobile-drawer-founded {
+  color: var(--gold-light, #e6ca65);
+  font-size: 0.85rem;
 }
 
 .mobile-drawer-close {

@@ -34,38 +34,17 @@
   margin-bottom: 1.25rem;
 }
 
-.brand-icon-box {
-  width: 42px;
-  height: 42px;
-  background: linear-gradient(
-    135deg,
-    var(--gold-light, #e6ca65),
-    var(--gold-primary, #c5a059)
-  );
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #060a10;
-  font-weight: bold;
-  font-size: 1.1rem;
-  box-shadow: 0 4px 12px rgba(197, 160, 89, 0.2);
+.footer-logo {
+  display: block;
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
 }
 
-.brand-text-box {
-  display: flex;
-  flex-direction: column;
-}
-
-.brand-name {
-  color: var(--text-primary, #ffffff);
-  font-size: 1.35rem;
-  line-height: 1.2;
-}
-
-.brand-subtext {
-  color: var(--gold-light, #c5a059);
-  font-size: 0.8rem;
+.footer-founded {
+  color: var(--gold-light, #e6ca65);
+  font-size: 0.95rem;
+  white-space: nowrap;
 }
 
 .footer-about-text {

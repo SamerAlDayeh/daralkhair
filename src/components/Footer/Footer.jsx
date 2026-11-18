@@ -16,17 +16,14 @@ export const Footer = () => {
           {/* Col 1: Brand & About */}
           <div className="footer-col brand-col">
             <div className="footer-brand">
-              <div className="brand-icon-box">
-                <span className="brand-arabic-symbol">دار</span>
-              </div>
-              <div className="brand-text-box">
-                <span className="brand-name font-arabic font-bold text-xl">
-                  دار الخير
-                </span>
-                <span className="brand-subtext font-arabic">
-                  للنشر والتوزيع
-                </span>
-              </div>
+              <img
+                src="/logo.webp"
+                alt="شعار دار الخير للنشر والتوزيع"
+                className="footer-logo"
+              />
+              <span className="footer-founded font-arabic">
+                تأسست عام 2015م
+              </span>
             </div>
             <p className="footer-about-text font-arabic">
               دار نشر مخصصة لتحقيق وتذهيب وطباعة أمهات كتب التراث الإسلامي
